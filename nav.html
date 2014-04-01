@@ -7,6 +7,15 @@
             a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
             a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
             a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            a.green:link {color:#00FF00;text-decoration:none;} /* unvisited link */
+            a.green:visited {color:#00FF00;text-decoration:none;}  /* visited link */
+            a.green:hover {color:#007F00;text-decoration:none;}  /* mouse over link */
+            a.green:active {color:#007F00;text-decoration:none;}  /* selected link */
+            a.red:link {color:#FF0000;text-decoration:none;} /* unvisited link */
+            a.red:visited {color:#FF0000;text-decoration:none;}  /* visited link */
+            a.red:hover {color:#7F0000;text-decoration:none;}  /* mouse over link */
+            a.red:active {color:#7F0000;text-decoration:none;}  /* selected link */
+
             body
             {                
                 color:#FFFFFF;
@@ -64,9 +73,9 @@
                         if(isPositive != null) {
                             var stockOutput;
                             if (isPositive) {
-                                stockOutput = '<font size="4" color="green"><a href="stock3.html" style="color:green" target="main">';
+                                stockOutput = '<font size="4" color="green"><a href="stock3.html" class="green" target="main">';
                             } else {
-                                stockOutput = '<font size="4" color="red"><a href="stock3.html" style="color:red" target="main">'
+                                stockOutput = '<font size="4" color="red"><a href="stock3.html" class="red" target="main">'
                             }
                             stockOutput = stockOutput + change + "<br />" + percentChange + '</a></font>';
                             document.getElementById('stock').innerHTML = stockOutput;
