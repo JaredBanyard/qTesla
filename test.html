@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <style>
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            body
+            {                
+                color:#FFFFFF;
+                background-color:#000000;
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+        </style>
+        <script type="text/javascript" src="geolocator.js"></script>
+        <script type="text/javascript">
+            // Success Callback
+            function onGeoSuccess(location) {
+                console.log(location);      
+                var strLocation = '<b>Latitude/Longitude:</b> ' + location.coords.latitude + '/' +
+                        location.coords.longitude + '<br />' +
+                        '<b>Formatted Address:</b> ' + location.formattedAddress + '<br />' +
+                        '<b>Region:</b> ' + location.address.region + '<br />' +
+                        '<b>Country:</b> ' + location.address.country + '<br />' +
+                        '<b>Country Code:</b> ' + location.address.countryCode + '<br />'
+                document.getElementById('geo-details').innerHTML = strLocation;
+                var strSensor = false;
+                var strZoom = 11;
+                if(location.ipGeoSource == null) {
+                    strSensor = true;
+                    strZoom = 13;
+                }
+                var strMap = '<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + 
+                        location.coords.latitude + ',' + location.coords.longitude + 
+                        '&zoom=' + strZoom + '&size=600x600&sensor=' + strSensor + '">'
+                console.log(strMap);
+                document.getElementById('geo-map').innerHTML = strMap;
+            }
+            // Error Callback
+            function onGeoError(message) {
+                console.log(message);
+            }
+            // Load Event Handler
+            window.onload = function () {
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 2, html5Options, null);
+            }
+        </script>
+    </head>
+    <body>
+        <center>   
+        <div id="geo-details"></div>
+        <div id="geo-map"></div>
+        </center>
+    </body>
+    
+</html>

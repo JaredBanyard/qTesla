@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="refresh" content="180">
+        <style>
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            body
+            {                
+                color:#FFFFFF;
+                background-color:#000000;
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body>
+    <center>
+        <!-- TradingView Widget BEGIN -->
+        <div id="tv-miniwidget"></div><script type="text/javascript" src="https://s3.amazonaws.com/tradingview/tv.js"></script>
+        <script type="text/javascript">
+            new TradingView.MiniWidget({
+            "container_id": "tv-miniwidget",
+            "tabs": [
+            "Tech",
+            "Market",
+            "Bonds",
+            "Forex"
+            ],
+        "symbols": {
+        "Tech":     
+        [
+            [
+            "Tesla Motors",
+            "BATS:TSLA"
+            ],[
+            "Solar City",
+            "BATS:SCTY"
+            ],
+            [
+            "Google",
+            "BATS:GOOG"
+            ],
+            [
+            "Apple",
+            "BATS:AAPL "
+            ],
+            [
+            "Microsoft",
+            "BATS:MSFT "
+            ],
+            [
+            "Yahoo",
+            "BATS:YHOO "
+            ],
+            [
+            "Facebook",
+            "BATS:FB "
+            ],
+            [
+            "Twitter",
+            "BATS:TWTR "
+            ]
+        ],
+        "Market": 
+        [
+            [
+            "S&P500",
+            "SPX500"
+            ],
+            [
+            "NQ100",
+            "NAS100"
+            ],
+            [
+            "Dow30",
+            "DOWI"
+            ],
+            [
+            "Nikkei225",
+            "JPN225"
+            ]
+        ],  
+        "Bonds": [
+            [
+            "US 2YR",
+            "TUZ2013"
+            ],
+            [
+            "US 10YR",
+            "TYZ2013"
+            ],
+            [
+            "US 30YR",
+            "USZ2013"
+            ],
+            [
+            "Euro Bund",
+            "FX:BUND"
+            ],
+            [
+            "Euro BTP",
+            "EUREX:II1!"
+            ],
+            [
+            "Euro BOBL",
+            "EUREX:HR1!"
+            ]
+        ],
+        "Forex": 
+        [
+            "FX:EURUSD",
+            "FX:GBPUSD",
+            "FX:USDJPY",
+            "FX:USDCHF",
+            "FX:AUDUSD",
+            "FX:USDCAD"
+        ]
+        },
+        "width": 960
+        });
+        </script>
+        <!-- TradingView Widget END -->
+    </center>
+  </body>
+
+</html>
+

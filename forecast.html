@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="refresh" content="180">
+        <style>
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            body
+            {                
+                color:#FFFFFF;
+                background-color:#000000;
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+        </style>
+        <script type="text/javascript" src="geolocator.js"></script>
+        <script type="text/javascript">
+            // Success Callback
+            function onGeoSuccess(location) {
+                console.log(location);      
+                var strForecast = '<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=' +
+                    location.coords.latitude + '&lon=' +
+                    location.coords.longitude + '&name=' + 
+                    location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial"></iframe>'
+                document.getElementById('geo-forecast').innerHTML = strForecast;
+            }
+            // Error Callback
+            function onGeoError(message) {
+                console.log(message);
+            }
+            // Load Event Handler
+            window.onload = function () {
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 2, html5Options, null);
+            }
+        </script>
+    </head>
+
+    <body>
+        <center>
+            <div id="geo-forecast"></div>
+        </center>    
+    </body>
+
+</html>
