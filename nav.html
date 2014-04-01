@@ -19,23 +19,13 @@
                 top:10px;
                 left:10px;
             }
-            test
+            ticker
             {
                 position:fixed;
                 top:10px;
                 right:10px;
             }
         </style>
-    </head>
-
-    <body>
-        <home><font size="4"><a href="main.html" target="main">Quick<br>Tesla</a></font></home>
-        <test><font size="4"><a href="test.html" target="main">Debug</a></font></test>
-		<br>
-        <center>
-        <font size="6"><a href="forecast.html" target="main">Weather</a> | <a href="radar.html" target="main">Radar</a> | <a href="news.html" target="main">News</a> | <a href="http://tesla.plugshare.com" target="main">PlugShare</a> | <a href="stock3.html" target="main">Stock</a> | <a href="valet.html" target="main">Valet</a></font>
-        </center>
-        
 
         <script type="text/javascript">
 
@@ -50,6 +40,50 @@
           })();
 
         </script>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $.ajax({
+                    url : 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22TSLA%22%29&env=store://datatables.org/alltableswithkeys',
+                    dataType : "xml",
+                    success : function(xml) {
+                        var quote = $(xml).find('quote');
+                        var change = quote.find('Change').text();
+                        var percentChange = quote.find('PercentChange').text();
+                        console.log('change: ' + change);
+                        console.log('percentChange: ' + percentChange);
+                        var isPositive;
+                        if(change.charAt(0) == '+') {
+                            isPositive = true;
+                        } else if(change.charAt(0) == '-') {
+                            isPositive = false;
+                        } else {
+                            isPositive = null;
+                        }
+                        if(isPositive != null) {
+                            var stockOutput;
+                            if (isPositive) {
+                                stockOutput = '<font size="4" color="green"><a href="stock3.html" style="color:green" target="main">';
+                            } else {
+                                stockOutput = '<font size="4" color="red"><a href="stock3.html" style="color:red" target="main">'
+                            }
+                            stockOutput = stockOutput + change + "<br />" + percentChange + '</a></font>';
+                            document.getElementById('stock').innerHTML = stockOutput;
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <home><font size="4"><a href="main.html" target="main">Quick<br>Tesla</a></font></home>
+        <ticker><div id="stock"><font size="4"><a href="stock3.html" target="main">Stock</a></font></div></ticker>
+		<br>
+        <center>
+        <font size="6"><a href="forecast.html" target="main">Weather</a> | <a href="radar.html" target="main">Radar</a> | <a href="news.html" target="main">News</a> | <a href="http://tesla.plugshare.com" target="main">PlugShare</a> | <a href="valet.html" target="main">Valet</a></font>
+        </center>
     </body>
 
 </html>
