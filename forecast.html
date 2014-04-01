@@ -15,7 +15,8 @@
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
         </style>
-        <script type="text/javascript" src="geolocator.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="geolocator.min.js"></script>
         <script type="text/javascript">
             // Success Callback
             function onGeoSuccess(location) {
@@ -25,6 +26,30 @@
                     location.coords.longitude + '&name=' + 
                     location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial"></iframe>'
                 document.getElementById('geo-forecast').innerHTML = strForecast;
+
+                jQuery(document).ready(function($) {
+                    $.ajax({
+                        url : 'http://api.wunderground.com/api/782096d3ad25cd76/alerts/q/' + location.coords.latitude + ',' + location.coords.longitude +  '.json',
+                        dataType : "jsonp",
+                        success : function(parsed_json) {
+                            var strAlerts;
+                            $.each(parsed_json.alerts, function(i, item) {
+                                console.log(item);
+                                if (i == 0) {
+                                    strAlerts = '<font size="6">Local Alerts:</font><br /><br />';
+                                }
+                                strAlerts = strAlerts + '<font size="5" color="red">' + item.description + '</font><br />' + 
+                                    '<font size="4">From ' + item.date + '</font><br />' +
+                                    '<font size="4">Until ' + item.expires + '</font><br /><br />' +
+                                    item.message + '<br /><br />';
+                            });
+                            if (strAlerts != null) {
+                                 document.getElementById('geo-alerts').innerHTML = strAlerts;
+                            }
+                        }
+                    });
+                });
+
             }
             // Error Callback
             function onGeoError(message) {
@@ -41,6 +66,7 @@
     <body>
         <center>
             <div id="geo-forecast"></div>
+            <div id="geo-alerts" style="width:960px;text-align:left;"></div>
         </center>    
     </body>
 
