@@ -45,7 +45,7 @@
                     dataType : "xml",
                     success : function(xml) {
                         var quote = $(xml).find('quote');
-                        var ask = quote.find('Ask').text();
+                        var lastTrade = quote.find('LastTradePriceOnly').text();
                         var percentChange = quote.find('PercentChange').text();
                         var isPositive;
                         if(percentChange.charAt(0) == '+') {
@@ -62,7 +62,7 @@
                             } else {
                                 stockOutput = '<font size="4" color="red"><a href="stock3.html" class="red" target="main">'
                             }
-                            stockOutput = stockOutput + ask + "<br />" + percentChange + '</a></font>';
+                            stockOutput = stockOutput + lastTrade + "<br />" + percentChange + '</a></font>';
                             document.getElementById('stock').innerHTML = stockOutput;
                         }
                     }
