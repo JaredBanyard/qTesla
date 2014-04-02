@@ -45,14 +45,12 @@
                     dataType : "xml",
                     success : function(xml) {
                         var quote = $(xml).find('quote');
-                        var change = quote.find('Change').text();
+                        var ask = quote.find('Ask').text();
                         var percentChange = quote.find('PercentChange').text();
-                        console.log('change: ' + change);
-                        console.log('percentChange: ' + percentChange);
                         var isPositive;
-                        if(change.charAt(0) == '+') {
+                        if(percentChange.charAt(0) == '+') {
                             isPositive = true;
-                        } else if(change.charAt(0) == '-') {
+                        } else if(percentChange.charAt(0) == '-') {
                             isPositive = false;
                         } else {
                             isPositive = null;
@@ -64,7 +62,7 @@
                             } else {
                                 stockOutput = '<font size="4" color="red"><a href="stock3.html" class="red" target="main">'
                             }
-                            stockOutput = stockOutput + change + "<br />" + percentChange + '</a></font>';
+                            stockOutput = stockOutput + ask + "<br />" + percentChange + '</a></font>';
                             document.getElementById('stock').innerHTML = stockOutput;
                         }
                     }
