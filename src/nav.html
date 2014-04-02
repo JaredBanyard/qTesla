@@ -39,11 +39,15 @@
         </style>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
         <script type="text/javascript">
+        getStock();
+        var loop = setInterval(function(){getStock()}, 5000);
+        function getStock() {
             jQuery(document).ready(function($) {
                 $.ajax({
                     url : 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22TSLA%22%29&env=store://datatables.org/alltableswithkeys',
                     dataType : "xml",
                     success : function(xml) {
+                        console.log(xml);
                         var quote = $(xml).find('quote');
                         var lastTrade = quote.find('LastTradePriceOnly').text();
                         var percentChange = quote.find('PercentChange').text();
@@ -68,6 +72,7 @@
                     }
                 });
             });
+        }
         </script>
     </head>
 
