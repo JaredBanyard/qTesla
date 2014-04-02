@@ -46,10 +46,7 @@
                             var strAlerts;
                             $.each(parsed_json.alerts, function(i, item) {
                                 console.log(item);
-                                if (i == 0) {
-                                    strAlerts = '<font size="6">Local Alerts:</font><br /><br />';
-                                }
-                                strAlerts = strAlerts + '<font size="5" color="red">' + item.description + '</font><br />' + 
+                                strAlerts = '<font size="5" color="red">' + item.description + '</font><br />' + 
                                     '<font size="4">From ' + item.date + '</font><br />' +
                                     '<font size="4">Until ' + item.expires + '</font><br /><br />' +
                                     item.message + '<br /><br />';
