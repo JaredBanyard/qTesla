@@ -15,4 +15,4 @@ GNU GENERAL PUBLIC LICENSE
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
- See LICENSE.txt
+ [See LICENSE.txt for more info](LICENSE.txt)
