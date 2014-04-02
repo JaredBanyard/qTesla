@@ -40,7 +40,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
         <script type="text/javascript">
         getStock();
-        var loop = setInterval(function(){getStock()}, 5000);
+        var loop = setInterval(function(){getStock()}, 10000);
         function getStock() {
             jQuery(document).ready(function($) {
                 $.ajax({
@@ -49,7 +49,7 @@
                     success : function(xml) {
                         console.log(xml);
                         var quote = $(xml).find('quote');
-                        var lastTrade = quote.find('LastTradePriceOnly').text();
+                        var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
                         var percentChange = quote.find('PercentChange').text();
                         var isPositive;
                         if(percentChange.charAt(0) == '+') {
