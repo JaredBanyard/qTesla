@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="refresh" content="180">
+        <style>
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            body
+            {                
+                color:#FFFFFF;
+                background-color:#000000;
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+        </style>
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-49492188-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="geolocator.min.js"></script>
+        <script type="text/javascript">
+            // Success Callback
+            function onGeoSuccess(location) {
+                console.log(location);      
+                var strForecast = '<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=' +
+                    location.coords.latitude + '&lon=' +
+                    location.coords.longitude + '&name=' + 
+                    location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial"></iframe>'
+                document.getElementById('geo-forecast').innerHTML = strForecast;
+				//https://api.forecast.io/forecast/d740087b4abc1ed94efe769933fe3384/37.2853942,-98.025999
+				if (location.address.countryCode == "US") {
+	                jQuery(document).ready(function($) {
+	                    $.ajax({
+	                        url : 'https://api.forecast.io/forecast/d740087b4abc1ed94efe769933fe3384/' + location.coords.latitude + ',' + location.coords.longitude,
+	                        dataType : "jsonp",
+	                        success : function(parsed_json) {
+	                            var strAlerts;
+	                            if(parsed_json.hasOwnProperty('alerts')) {
+		                            $.each(parsed_json.alerts, function(i, item) {
+		                                console.log(item);
+		                                var date = new Date(0);
+		                                date.setUTCSeconds(item.time);
+		                                var fromStr = date.toString();
+		                                date.setUTCSeconds(item.expires);
+		                                var untilStr = date.toString();
+		                                strAlerts = '<font size="5" color="red">' + item.title + '</font><br />' + 
+		                                    '<font size="4">From ' + fromStr + '</font><br />' +
+		                                    '<font size="4">Until ' + untilStr + '</font><br /><br />' +
+		                                    item.description + '<br /><br />';
+		                            });
+		                            if (strAlerts != null) {
+		                                 document.getElementById('geo-alerts').innerHTML = strAlerts;
+		                            }
+	                        	}
+	                        }
+	                    });
+	                });
+				}
+
+            }
+            // Error Callback
+            function onGeoError(message) {
+                console.log(message);
+            }
+            // Load Event Handler
+            window.onload = function () {
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 2, html5Options, null);
+            }
+        </script>
+    </head>
+
+    <body>
+        <center>
+            <div id="geo-forecast"></div>
+            <div id="geo-alerts" style="width:960px;text-align:left;"></div>
+        </center>    
+    </body>
+
+</html>
