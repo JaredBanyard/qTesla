@@ -9,6 +9,9 @@ Swiss Radar:
 20min.ch
 meteonews.ch
 
+Norway Radar:
+http://yr.no/
+
 Charging:
 lemnet.org
 chargemap.com
