@@ -44,6 +44,7 @@
 	                        url : 'https://api.forecast.io/forecast/d740087b4abc1ed94efe769933fe3384/' + location.coords.latitude + ',' + location.coords.longitude,
 	                        dataType : "jsonp",
 	                        success : function(parsed_json) {
+                                console.log(parsed_json);    
 	                            var strAlerts;
 	                            if(parsed_json.hasOwnProperty('alerts')) {
 		                            $.each(parsed_json.alerts, function(i, item) {
@@ -75,7 +76,7 @@
             // Load Event Handler
             window.onload = function () {
                 var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 2, html5Options, null);
+                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
             }
         </script>
     </head>
