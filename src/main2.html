@@ -13,14 +13,18 @@
                 background-color:#000000;
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
-            #clock {
+            logo
+            {
+                position:fixed;
+                bottom:10px;
+                right:10px;
+            }
+            #c1 {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                margin-top: -50px;
+                margin-top: -150px;
                 margin-left: -150px;
-                width: 300px;
-                height: 100px;
             }
         </style>
         <script type="text/javascript">
@@ -35,32 +39,11 @@
         })();
         </script>
 
-        <script>
-        function startTime()
-        {
-            var today=new Date();
-            var h=today.getHours();
-            var m=today.getMinutes();
-            var s=today.getSeconds();
-            // add a zero in front of numbers<10
-            m=checkTime(m);
-            s=checkTime(s);
-            document.getElementById('clock').innerHTML = '<font size="7">' + h + ":" + m + ":" + s + '</font>';
-            t=setTimeout(function(){startTime()},500);
-        }
-
-        function checkTime(i)
-        {
-            if (i<10)
-            {
-                i="0" + i;
-            }
-            return i;
-        }
-        </script>
+        <script src="coolclock.js" type="text/javascript"></script>
+        
     </head>
-
-    <body onload="startTime()">
-        <div align="center" id="clock"></div>
+    <body align="center" style="margin:0;padding:1em;" onload="CoolClock.findAndCreateClocks()">
+        <logo><a href="main.html" target="main"><img src="logobtn.png" /></a></logo>
+        <canvas id="c1" class="CoolClock:chunkySwissOnBlack:150"></canvas>
     </body>
 </html>
