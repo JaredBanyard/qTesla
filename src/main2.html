@@ -66,19 +66,29 @@
                 console.log(location);
                 // document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:250:noSeconds:-4"></canvas>';
                 // CoolClock.findAndCreateClocks();
+                var strSensor = false;
+                if(location.ipGeoSource == null) {
+                    strSensor = true;
+                }
+                var strQuery = 'https://maps.googleapis.com/maps/api/timezone/json?location=' +  
+                            location.coords.latitude + ',' + 
+                            location.coords.longitude + '&timestamp=' + 
+                            (location.timestamp/1000) + '&sensor=' + 
+                            strSensor + '&key=AIzaSyC64HTO_HeRHIKgUC9tx9OIe9PFYkIoy4Y';
+                console.log(strQuery);
                 jQuery(document).ready(function($) {
                     $.ajax({
-                        url : 'http://api.geonames.org/timezone?lat=' + 
-                        location.coords.latitude + '&lng=' + 
-                        location.coords.longitude + '&username=tachyondev',
-                        dataType : "xml",
-                        success : function(xml) {
-                            console.log(xml);
-                            var dstOffset = parseFloat($(xml).find('dstOffset').text());
-                            var gmtOffset = parseFloat($(xml).find('gmtOffset').text());
+                        url : strQuery,
+                        dataType : "json",
+                        success : function(json) {
+                            console.log(json);
+                            var dstOffset = json.dstOffset / 3600;
+                            var rawOffset = json.rawOffset / 3600;
+                            var finalOffset = (dstOffset + rawOffset);
                             console.log(dstOffset);
-                            console.log(gmtOffset);
-                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + dstOffset + '"></canvas>';
+                            console.log(rawOffset);
+                            console.log(finalOffset);
+                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + finalOffset + '"></canvas>';
                             CoolClock.findAndCreateClocks();
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) { 
