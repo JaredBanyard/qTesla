@@ -36,7 +36,7 @@
                 bottom:10px;
                 right:10px;
             }
-            #c1 {
+            #clock {
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -54,13 +54,55 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
+        var date = new Date();
+
         </script>
 
+        <script src="jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="geolocator.min.js"></script>
+        <script type="text/javascript">
+            // Success Callback
+            function onGeoSuccess(location) {
+                console.log(location);
+                jQuery(document).ready(function($) {
+                    $.ajax({
+                        url : 'http://api.geonames.org/timezone?lat=' + 
+                        location.coords.latitude + '&lng=' + 
+                        location.coords.longitude + '&username=tachyondev',
+                        dataType : "xml",
+                        success : function(xml) {
+                            console.log(xml);
+                            var dstOffset = parseFloat($(xml).find('dstOffset').text());
+                            var gmtOffset = parseFloat($(xml).find('gmtOffset').text());
+                            console.log(dstOffset);
+                            console.log(gmtOffset);
+                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150"></canvas>';
+                            CoolClock.findAndCreateClocks();
+                        }
+                    });
+                });
+            }
+            // Error Callback
+            function onGeoError(message) {
+                console.log(message);
+            }
+            // Load Event Handler
+            window.onload = function () {
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
+                
+            }
+        </script>        
+        <script>
+        //http://api.geonames.org/timezone?lat=47.01&lng=10.2&username=tachyondev
+        </script>
         <script src="coolclock.js" type="text/javascript"></script>
         
     </head>
-    <body align="center" style="margin:0;padding:1em;" onload="CoolClock.findAndCreateClocks()">
+    
+    <body align="center" style="margin:0;padding:1em;">
         <logo><a href="main.html" target="main"><img src="logobtn.png" /></a></logo>
-        <canvas id="c1" class="CoolClock:chunkySwissOnBlack:150"></canvas>
+        <div id="clock" />        
     </body>
+
 </html>
