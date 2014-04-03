@@ -65,7 +65,7 @@
 				if (location.address.countryCode == "US") {
 	                jQuery(document).ready(function($) {
 	                    $.ajax({
-	                        url : 'https://api.forecast.io/forecast/d740087b4abc1ed94efe769933fe3384/' + location.coords.latitude + ',' + location.coords.longitude,
+	                        url : 'https://api.forecast.io/forecast/4a71ece462e94548186cf04c809ec550/' + location.coords.latitude + ',' + location.coords.longitude,
 	                        dataType : "jsonp",
 	                        success : function(parsed_json) {
                                 console.log(parsed_json);    
