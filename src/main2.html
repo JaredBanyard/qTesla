@@ -64,6 +64,8 @@
             // Success Callback
             function onGeoSuccess(location) {
                 console.log(location);
+                // document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:250:noSeconds:-4"></canvas>';
+                // CoolClock.findAndCreateClocks();
                 jQuery(document).ready(function($) {
                     $.ajax({
                         url : 'http://api.geonames.org/timezone?lat=' + 
@@ -76,9 +78,13 @@
                             var gmtOffset = parseFloat($(xml).find('gmtOffset').text());
                             console.log(dstOffset);
                             console.log(gmtOffset);
+                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + dstOffset + '"></canvas>';
+                            CoolClock.findAndCreateClocks();
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) { 
                             document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150"></canvas>';
                             CoolClock.findAndCreateClocks();
-                        }
+                        } 
                     });
                 });
             }
