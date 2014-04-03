@@ -4,3 +4,12 @@ http://www.worldweatheronline.com/free-weather-feed.aspx
 
 a popular weather radar in switzerland is 'regenradar schweiz' from 20min.ch and meteonews.ch. this service is available as app for the most ios's as i know. another good charging station site is chargemap.com.
 one more question: how is it possible to display the temperature in degrees celsius?
+
+Swiss Radar:
+20min.ch
+meteonews.ch
+
+Charging:
+lemnet.org
+chargemap.com
+ 

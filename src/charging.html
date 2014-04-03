@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <style>
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            body
+            {             
+                height: 100%;   
+                color:#FFFFFF;
+                background-color:#000000;
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+            html {
+                height: 100%;
+            }
+            #frame {
+                height: 100%;
+            }
+        </style>
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-49492188-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        </script>
+        <script type="text/javascript" src="geolocator.min.js"></script>
+        <script type="text/javascript">
+            // Success Callback
+            function onGeoSuccess(location) {
+                console.log(location);      
+                var strCharging ;
+				if (location.address.countryCode == "US") {
+                    strCharging = '<iframe id="charging_embed" type="text/html" frameborder="0" height="100%" width="100%" src="http://tesla.plugshare.com"></iframe>';
+				} else {
+                    strCharging = '<iframe id="charging_embed" type="text/html" frameborder="0" height="100%" width="100%" src="http://www.chargmap.com/m/""></iframe>';      
+                }
+                document.getElementById('frame').innerHTML = strCharging;                    
+            }
+            // Error Callback
+            function onGeoError(message) {
+                console.log(message);
+            }
+            // Load Event Handler
+            window.onload = function () {
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
+            }
+        </script>
+    </head>
+
+    <body>
+        <center>
+            <div id="frame"></div>
+        </center>    
+    </body>
+
+</html>
