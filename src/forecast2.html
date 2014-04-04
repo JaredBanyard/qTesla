@@ -56,12 +56,16 @@
                 } else {
                     unitCode = "ca";
                 }
-                var strForecast = '<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=' +
-                    location.coords.latitude + '&lon=' +
-                    location.coords.longitude + '&name=' + 
-                    location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + unitCode + '"></iframe>';
-                console.log(strForecast);
-                document.getElementById('geo-forecast').innerHTML = strForecast;
+                getForecast();
+                var loop = setInterval(function(){getForecast()}, 120000);
+                function getForecast() {
+                    var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=' +
+                        location.coords.latitude + '&lon=' +
+                        location.coords.longitude + '&name=' + 
+                        location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + unitCode + '"></iframe>';
+                    console.log(strForecast);
+                    document.getElementById('geo-forecast').innerHTML = strForecast;
+                }
 				if (location.address.countryCode == "US") {
 	                jQuery(document).ready(function($) {
 	                    $.ajax({
