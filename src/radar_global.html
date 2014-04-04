@@ -15,7 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <!DOCTYPE html>
 <html>
 
@@ -26,17 +25,13 @@
             a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
             a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
             body
-            {             
-                height: 100%;   
+            {                
                 color:#FFFFFF;
                 background-color:#000000;
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
-            html {
-                height: 100%;
-            }
-            #frame {
-                height: 100%;
+            #map {
+                width: 100%;
             }
         </style>
         <script type="text/javascript">
@@ -50,18 +45,18 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
         </script>
+        <script src="jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="geolocator.min.js"></script>
         <script type="text/javascript">
             // Success Callback
             function onGeoSuccess(location) {
                 console.log(location);      
-                var strCharging ;
-                if (location.address.countryCode == "US") {
-                    strCharging = '<iframe id="radar_embed" type="text/html" frameborder="0" height="100%" width="100%" src="radar_frames.html"></iframe>';
-                } else {
-                    strCharging = '<iframe id="radar_embed" type="text/html" frameborder="0" height="100%" width="100%" src="radar_global.html"></iframe>';      
-                }
-                document.getElementById('frame').innerHTML = strCharging;                    
+                var strApi = 'http://api.wunderground.com/api/782096d3ad25cd76/animatedsatellite/q/' + 
+                    location.coords.latitude + ',' + 
+                    location.coords.longitude + 
+                    '.gif?width=960&height=960&radius=300&newmaps=1&num=8&delay=50';
+                console.log(strApi);
+                document.getElementById('map').innerHTML = '<img src="' + strApi + '" width="100%" />';
             }
             // Error Callback
             function onGeoError(message) {
@@ -77,8 +72,8 @@
 
     <body>
         <center>
-            <div id="frame"></div>
-        </center>    
+            <div id="map" />
+        </center>
     </body>
 
 </html>
