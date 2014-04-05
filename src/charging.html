@@ -57,9 +57,9 @@
                 console.log(location);      
                 var strCharging ;
 				if (location.address.countryCode == "US" || location.address.countryCode == "CA") {
-                    strCharging = '<iframe id="charging_embed" type="text/html" frameborder="0" height="100%" width="100%" src="http://tesla.plugshare.com"></iframe>';
+                    strCharging = '<iframe id="charging_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="http://tesla.plugshare.com"></iframe>';
 				} else {
-                    strCharging = '<iframe style="width:100%;height:100%;" src="http://openchargemap.org/api/widgets/map/?maptitle=Map%20of%20Charging%20Locations&languagecode=en&maxresults=5000&filtercontrols=,nearlocation,distance,country,connectiontype,level&geolocation=auto&clustering=true"></iframe>';      
+                    strCharging = '<iframe id="charging_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="http://openchargemap.org/api/widgets/map/?maptitle=Map%20of%20Charging%20Locations&languagecode=en&maxresults=5000&filtercontrols=,nearlocation,distance,country,connectiontype,level&geolocation=auto&clustering=true"></iframe>';      
                 }
                 document.getElementById('frame').innerHTML = strCharging;                    
             }
@@ -75,7 +75,7 @@
         </script>
     </head>
 
-    <body>
+    <body style="margin:0px;padding:0px;overflow:hidden">
         <center>
             <div id="frame"></div>
         </center>    
