@@ -85,11 +85,11 @@
                         if(isPositive != null) {
                             var stockOutput;
                             if (isPositive) {
-                                stockOutput = '<b><font size="5"><a href="stock3.html" class="green" target="main"></b>';
+                                stockOutput = '<font size="5"><b><a href="stock3.html" class="green" target="main">';
                             } else {
-                                stockOutput = '<b><font size="5"><a href="stock3.html" class="red" target="main"></b>'
+                                stockOutput = '<font size="5"><b><a href="stock3.html" class="red" target="main">'
                             }
-                            stockOutput = stockOutput + lastTrade + "<br />" + percentChange + '</a></font>';
+                            stockOutput = stockOutput + lastTrade + "<br />" + percentChange + '</a></b></font>';
                             document.getElementById('stock').innerHTML = stockOutput;
                         }
                     }
@@ -100,8 +100,8 @@
     </head>
 
     <body>
-        <home><font size="5"><a href="main2.html" target="main">Quick<br>Tesla</a></font></home>
-        <ticker><div id="stock"><font size="5"><a href="stock3.html" target="main">Stock</a></font></div></ticker>
+        <home><font size="5"><b><a href="main2.html" target="main">Quick<br>Tesla</a></b></font></home>
+        <ticker><div id="stock"><font size="5"><b><a href="stock3.html" target="main">Stock</a></b></font></div></ticker>
 		<br>
         <center>
         <font size="6" ><b><a href="forecast2.html" target="main">Weather</a> &middot; <a href="radar.html" target="main">Radar</a> &middot; <a href="news.html" target="main">News</a> &middot; <a href="charging.html" target="main">Charging</a> &middot; <a href="valet.html" target="main">Valet</a></b></font>
