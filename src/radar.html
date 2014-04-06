@@ -34,9 +34,6 @@
             html {
                 height: 100%;
             }
-            #frame {
-                height: 100%;
-            }
         </style>
         <script type="text/javascript">
         var _gaq = _gaq || [];
@@ -56,11 +53,10 @@
                 console.log(location);      
                 var strCharging ;
                 if (location.address.countryCode == "US") {
-                    strCharging = '<iframe id="radar_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="radar_frames.html"></iframe>';
+                    document.location = "radar_frames.html";
                 } else {
-                    strCharging = '<iframe id="radar_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="radar_global.html"></iframe>';      
-                }
-                document.getElementById('frame').innerHTML = strCharging;                    
+                    document.location = "radar_global.html";
+                }                
             }
             // Error Callback
             function onGeoError(message) {
@@ -73,11 +69,4 @@
             }
         </script>
     </head>
-
-    <body style="margin:0px;padding:0px;overflow:hidden">
-        <center>
-            <div id="frame"></div>
-        </center>    
-    </body>
-
 </html>
