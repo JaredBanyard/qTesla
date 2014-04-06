@@ -32,10 +32,10 @@
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
             html {
-                height: 100%;
+                /*height: 100%;*/
             }
             #frame {
-                height: 100%;
+                /*height: 100%;*/
             }
         </style>
         <script type="text/javascript">
@@ -55,10 +55,10 @@
             function onGeoSuccess(location) {
                 console.log(location);      
                 var strCharging ;
-				if (location.address.countryCode == "US" || location.address.countryCode == "CA") {
-                    strCharging = '<iframe id="charging_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="http://tesla.plugshare.com"></iframe>';
-				} else {
-                    strCharging = '<iframe id="charging_embed" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" src="http://openchargemap.org/api/widgets/map/?maptitle=Map%20of%20Charging%20Locations&languagecode=en&maxresults=500&filtercontrols=,nearlocation,distance,country,connectiontype,level&geolocation=auto&clustering=true"></iframe>';      
+                if (location.address.countryCode == "US") {
+                    strCharging = '<iframe id="radar_embed" frameborder="0" src="radar_frames.html"></iframe>';
+                } else {
+                    strCharging = '<iframe id="radar_embed" frameborder="0" src="radar_global.html"></iframe>';      
                 }
                 document.getElementById('frame').innerHTML = strCharging;                    
             }
@@ -74,7 +74,7 @@
         </script>
     </head>
 
-    <body style="margin:0px;padding:0px;overflow:hidden">
+    <body>
         <center>
             <div id="frame"></div>
         </center>    
