@@ -70,25 +70,21 @@
                 if(location.ipGeoSource == null) {
                     strSensor = true;
                 }
-                var strQuery = 'https://maps.googleapis.com/maps/api/timezone/json?location=' +  
-                            location.coords.latitude + ',' + 
-                            location.coords.longitude + '&timestamp=' + 
-                            (location.timestamp/1000) + '&sensor=' + 
-                            strSensor + '&key=AIzaSyCNBKmd6mWZ2i1d-SwRTMkmxPIoi_5ap2c';
+                var strQuery = 'http://api.timezonedb.com/?lat=' +  
+                            location.coords.latitude + '&lng=' + 
+                            location.coords.longitude + '&time=' + 
+                            Math.floor(location.timestamp/1000) + '&format=json&key=4BQJCLKUX7YH';
                 console.log(strQuery);
                 jQuery(document).ready(function($) {
                     $.ajax({
+                        crossDomain: true,
                         url : strQuery,
-                        dataType : "json",
+                        dataType : "jsonp",
                         success : function(json) {
                             console.log(json);
-                            var dstOffset = json.dstOffset / 3600;
-                            var rawOffset = json.rawOffset / 3600;
-                            var finalOffset = (dstOffset + rawOffset);
-                            console.log(dstOffset);
-                            console.log(rawOffset);
-                            console.log(finalOffset);
-                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + finalOffset + '"></canvas>';
+                            var gmtOffset = json.gmtOffset / 3600;
+                            console.log(gmtOffset);
+                            document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + gmtOffset + '"></canvas>';
                             CoolClock.findAndCreateClocks();
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) { 
