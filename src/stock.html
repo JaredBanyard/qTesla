@@ -78,51 +78,51 @@
         <script type="text/javascript" src="geolocator.min.js"></script>
         <script type="text/javascript">
             window.onload = function () {
-            jQuery(document).ready(function($) {
-                $.ajax({
-                    url : 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22TSLA%22%29&env=store://datatables.org/alltableswithkeys',
-                    dataType : "xml",
-                    success : function(xml) {
-                        console.log(xml);
-                        var quote = $(xml).find('quote');
-                        var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
-                        var percentChange = quote.find('PercentChange').text();
-                        var daysLow = quote.find('DaysLow').text();
-                        var daysHigh = quote.find('DaysHigh').text();
-                        var lastTradeDate = quote.find('LastTradeDate').text();
-                        var isPositive;
-                        if(percentChange.charAt(0) == '+') {
-                            isPositive = true;
-                        } else if(percentChange.charAt(0) == '-') {
-                            isPositive = false;
-                        } else {
-                            isPositive = null;
-                        }
-                        if(isPositive != null) {
-                            var stockOutput;
-                            if (isPositive) {
-                                stockOutput = '<center><font size="8" color="green"><b>';
+                jQuery(document).ready(function($) {
+                    $.ajax({
+                        url : 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22TSLA%22%29&env=store://datatables.org/alltableswithkeys',
+                        dataType : "xml",
+                        success : function(xml) {
+                            console.log(xml);
+                            var quote = $(xml).find('quote');
+                            var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
+                            var percentChange = quote.find('PercentChange').text();
+                            var daysLow = quote.find('DaysLow').text();
+                            var daysHigh = quote.find('DaysHigh').text();
+                            var lastTradeDate = quote.find('LastTradeDate').text();
+                            var isPositive;
+                            if(percentChange.charAt(0) == '+') {
+                                isPositive = true;
+                            } else if(percentChange.charAt(0) == '-') {
+                                isPositive = false;
                             } else {
-                                stockOutput = '<center><font size="8" color="red"><b>';
+                                isPositive = null;
                             }
-                            stockOutput = stockOutput 
-                            + lastTrade + '<br />'
-                            + percentChange + '</b></font><br /><br />'
-                            + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
-                            + '<font size="4">' + lastTradeDate + '</font></center>';
-                            
-                            document.getElementById('stock').innerHTML = stockOutput;
-                            document.body.style.backgroundImage="none"
+                            if(isPositive != null) {
+                                var stockOutput;
+                                if (isPositive) {
+                                    stockOutput = '<center><font size="8" color="green"><b>';
+                                } else {
+                                    stockOutput = '<center><font size="8" color="red"><b>';
+                                }
+                                stockOutput = stockOutput 
+                                + lastTrade + '<br />'
+                                + percentChange + '</b></font><br /><br />'
+                                + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
+                                + '<font size="4">' + lastTradeDate + '</font></center>';
+                                
+                                document.getElementById('stock').innerHTML = stockOutput;
+                                document.body.style.backgroundImage="none"
+                            }
                         }
-                    }
+                    });
                 });
-            });
             }
         </script>
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><font size="5"><b><a href="index.html">qTesla</a></b></font></home>
+        <home><font size="5"><b><a href="http://qTes.la">qTesla</a></b></font></home>
         <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
         <center>
             <br>
