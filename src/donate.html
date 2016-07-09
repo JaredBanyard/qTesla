@@ -1,7 +1,7 @@
 <!-- 
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2014 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>QuickTesla Radar</title>
+        <title>QuickTesla</title>
 		<link rel="icon" 
 		      type="image/png" 
 		      href="favicon.png">
@@ -40,11 +40,7 @@
             body
             {              
                 color:#FFFFFF;
-                background-color:#000000;
-                background-image:url('spinner.gif');
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;      
+                background-color:#000000;  
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
             home
@@ -59,18 +55,19 @@
                 top:10px;
                 right:10px;
             }
-            div#radar {
+            div#paypal {
                 position: fixed;
                 width: 100%;
                 height: 100%;
-                color:#FFFFFF;
-                background-color:#000000;
-                background-repeat:no-repeat;
-                background-position:center;  
-                background-size:cover;
+            }
+            div#paypal > iframe {
+                display: block;
+                width: 100%;
+                height: 100%;
+                border: none;
             }
         </style>
-        
+
         <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-49492188-1']);
@@ -78,43 +75,27 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script type="text/javascript" src="geolocator.min.js"></script>
-        <script type="text/javascript">
-            // Success Callback
-            function onGeoSuccess(location) {
-                console.log(location);      
-                var strApi = 'http://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
-                    '&centerlat=' + location.coords.latitude +
-                    '&centerlon=' + location.coords.longitude + 
-                    '&width=580&height=620&radius=100&newmaps=1&num=8&delay=25&timelabel=1&noclutter=1';
-                console.log(strApi);
-                document.getElementById('radar').style.backgroundImage="url('" + strApi + "')";
-                document.body.style.backgroundImage="none"
-            }
-            // Error Callback
-            function onGeoError(message) {
-                console.log(message);
-                document.body.style.backgroundImage="url('teslalogo.png')";
-            }
-            // Load Event Handler
-            window.onload = function () {
-                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
-            }
-        </script>
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><font size="5"><b><a href="index.html" class="red">qTesla</a></b></font></home>
-        <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
+        <home><font size="5"><b><a href="index.html">qTesla</a></b></font></home>
+        <donate><font size="5"><b><a href="donate.html" class="red">Donate</a></b></font></donate>
         <center>
             <br>
-            <font size="6" ><b><a href="forecast.html">Forecast</a> &middot; <a href="radar.html" class="red">Radar</a> &middot; <a href="waze.html">Waze</a> &middot; <a href="plugshare.html">PlugShare</a> &middot; <a href="stock.html">Stock</a></b></font>
+            <font size="6" ><b><a href="forecast.html">Forecast</a> &middot; <a href="radar.html">Radar</a> &middot; <a href="waze.html">Waze</a> &middot; <a href="plugshare.html">PlugShare</a> &middot; <a href="stock.html">Stock</a></b></font>
         </center>    
-        <br>     
+        <br>
+        <br>
+        <br>
         <br>
         <center>
-            <div id="radar"/>
-        </center>  
+            So these dynamic radar images from Weather Underground are expensive...<br><br>Please help if you can.<br><br><br>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="FK6ETJBEXTJES">
+            <input type="image" src="paypaldonate.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            </form>
+        </center>
     </body>
 </html>

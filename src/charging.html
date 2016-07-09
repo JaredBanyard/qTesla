@@ -1,7 +1,7 @@
 <!-- 
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2014 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,24 +15,47 @@
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <!DOCTYPE html>
 <html>
-
     <head>
-        <style>
+        <title>QuickTesla</title>
+		<link rel="icon" 
+		      type="image/png" 
+		      href="favicon.png">
+        <style type="text/css">
             a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
             a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
             a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
             a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
+            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
+            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
+            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
+            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
+            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
+            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
+            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
+            a img {border: none;}   
+            input:focus, textarea:focus, *:focus {outline: none;}
             body
-            {             
+            {              
                 color:#FFFFFF;
-                background-color:#000000;
+                background-color:#000000;  
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
-            html {
+            /* iframe's parent node */
+            div#waze {
+                position: fixed;
+                width: 100%;
                 height: 100%;
+            }
+
+            /* iframe itself */
+            div#waze > iframe {
+                display: block;
+                width: 100%;
+                height: 100%;
+                border: none;
             }
         </style>
         <script type="text/javascript">
@@ -46,27 +69,19 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
         </script>
-        <script type="text/javascript" src="geolocator.min.js"></script>
-        <script type="text/javascript">
-            // Success Callback
-            function onGeoSuccess(location) {
-                console.log(location);      
-                var strCharging ;
-				if (location.address.countryCode == "US" || location.address.countryCode == "CA") {
-                    document.location = "http://tesla.plugshare.com";
-				} else {
-                    document.location = "http://lemnet.org/map/"; 
-                }           
-            }
-            // Error Callback
-            function onGeoError(message) {
-                console.log(message);
-            }
-            // Load Event Handler
-            window.onload = function () {
-                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
-            }
-        </script>
     </head>
+
+    <body style="margin:0px;padding:0px;overflow:hidden">
+        <center>
+            <br>
+            <font size="6" ><b><a href="index.html">Home</a> &middot; <a href="forecast.html">Forecast</a> &middot; <a href="radar.html">Radar</a> &middot; <a href="waze.html" class="red">Waze</a> &middot; <a href="charging.html">Charging</a> &middot; <a href="stock.html">Stock</a></b></font>
+        </center>    
+        <br>
+        <br>
+        <div id="waze">
+            <iframe src="https://tesla-waze.excelsis.com" frameborder="0">
+                Your browser does not support inline frames.
+            </iframe>
+        </div>
+    </body>
 </html>

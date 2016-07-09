@@ -1,7 +1,7 @@
 <!-- 
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2014 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,24 +23,59 @@
 		      type="image/png" 
 		      href="favicon.png">
         <style type="text/css">
-        body
-        {                
-            color:#FFFFFF;
-            background-color:#000000;
-            font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
-        }
-        .framebg
-        {
-            background-color: #000000;
-        }
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
+            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
+            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
+            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
+            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
+            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
+            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
+            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
+            a img {border: none;}   
+            input:focus, textarea:focus, *:focus {outline: none;}
+            body
+            {              
+                color:#FFFFFF;
+                background-color:#000000;
+                background-image:url('teslalogo.png');
+                background-repeat:no-repeat;
+                background-attachment:fixed;
+                background-position:center;      
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+            home
+            {
+                position:fixed;
+                top:10px;
+                left:10px;
+            }
+            donate
+            {
+                position:fixed;
+                top:10px;
+                right:10px;
+            }
         </style>
+        
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-49492188-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
+        </script>
+
     </head>
 
-    <frameset framespacing="0" rows="86,*" frameborder="0" noresize>
-        <frame name="nav" allowTransparency="true" class="framebg" src="nav.html" target="nav">
-        <frame name="main" allowTransparency="true" class="framebg" src="main2.html" target="main">
-    </frameset>
-
-    <body>
+    <body style="margin:0px;padding:0px;overflow:hidden">
+        <home><font size="5"><b><a href="index.html" class="red">qTesla</a></b></font></home>
+        <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
+        <center>
+            <br>
+            <font size="6" ><b><a href="forecast.html">Forecast</a> &middot; <a href="radar.html">Radar</a> &middot; <a href="waze.html">Waze</a> &middot; <a href="plugshare.html">PlugShare</a> &middot; <a href="stock.html">Stock</a></b></font>
+        </center>       
     </body>
 </html>
