@@ -18,7 +18,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>QuickTesla Radar</title>
+        <title>qTesla Radar</title>
 		<link rel="icon" 
 		      type="image/png" 
 		      href="favicon.png">
@@ -41,10 +41,6 @@
             {              
                 color:#FFFFFF;
                 background-color:#000000;
-                background-image:url('spinner.gif');
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;      
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
             home
@@ -69,6 +65,16 @@
                 background-position:center;  
                 background-size:cover;
             }
+            div#spinner {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                color:#FFFFFF;
+                background-repeat:no-repeat;
+                background-attachment:fixed;
+                background-position:center;    
+                background-image:url('spinner.gif');  
+            }
         </style>
         
         <script type="text/javascript">
@@ -87,14 +93,18 @@
                     '&centerlat=' + location.coords.latitude +
                     '&centerlon=' + location.coords.longitude + 
                     '&width=580&height=700&radius=100&newmaps=1&num=8&delay=25&timelabel=1&noclutter=1';
-                console.log(strApi);
-                document.getElementById('radar').style.backgroundImage="url('" + strApi + "')";
-                document.body.style.backgroundImage="none"
+                var radarImage = new Image();           
+                radarImage.onload = function() {
+                    document.getElementById('radar').style.backgroundImage = 'url(' + radarImage.src + ')';
+                    document.getElementById('spinner').style.backgroundImage="none";
+                };
+                radarImage.src = strApi;
             }
             // Error Callback
             function onGeoError(message) {
                 console.log(message);
-                document.body.style.backgroundImage="url('teslalogo.png')";
+                document.getElementById('radar').style.backgroundImage="none";
+                document.getElementById('spinner').style.backgroundImage="url('teslalogo.png')";
             }
             // Load Event Handler
             window.onload = function () {
@@ -115,6 +125,7 @@
         <br>
         <center>
             <div id="radar"/>
+            <div id="spinner"/>
         </center>  
     </body>
 </html>
