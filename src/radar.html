@@ -86,7 +86,7 @@
                 var strApi = 'http://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
                     '&centerlat=' + location.coords.latitude +
                     '&centerlon=' + location.coords.longitude + 
-                    '&width=580&height=620&radius=100&newmaps=1&num=8&delay=25&timelabel=1&noclutter=1';
+                    '&width=580&height=700&radius=100&newmaps=1&num=8&delay=25&timelabel=1&noclutter=1';
                 console.log(strApi);
                 document.getElementById('radar').style.backgroundImage="url('" + strApi + "')";
                 document.body.style.backgroundImage="none"
@@ -105,7 +105,7 @@
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><font size="5"><b><a href="index.html" class="red">qTesla</a></b></font></home>
+        <home><font size="5"><b><a href="index.html">qTesla</a></b></font></home>
         <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
         <center>
             <br>
