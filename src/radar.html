@@ -92,7 +92,7 @@
                 var strApi = 'http://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
                     '&centerlat=' + location.coords.latitude +
                     '&centerlon=' + location.coords.longitude + 
-                    '&width=580&height=700&radius=100&newmaps=1&num=8&delay=25&timelabel=1&noclutter=1';
+                    '&width=870&height=1050&radius=150&newmaps=1&num=10&delay=25&timelabel=1&noclutter=1';
                 var radarImage = new Image();           
                 radarImage.onload = function() {
                     document.getElementById('radar').style.backgroundImage = 'url(' + radarImage.src + ')';
@@ -118,6 +118,7 @@
         <home><font size="5"><b><a href="index.html">qTesla</a></b></font></home>
         <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
         <center>
+            <br>
             <br>
             <font size="6" ><a href="forecast.html">Forecast</a> &middot; <a href="radar.html" class="red">Radar</a> &middot; <a href="plugshare.html">PlugShare</a> &middot; <a href="waze.html">Waze</a> &middot; <a href="stock.html">Stock</a></font>
         </center>    
