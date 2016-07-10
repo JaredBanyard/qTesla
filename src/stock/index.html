@@ -21,7 +21,7 @@
         <title>qTesla Stock</title>
 		<link rel="icon" 
 		      type="image/png" 
-		      href="favicon.png">
+		      href="../favicon.png">
         <style type="text/css">
             a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
             a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
@@ -41,7 +41,7 @@
             {              
                 color:#FFFFFF;
                 background-color:#000000;
-                background-image:url('spinner.gif');
+                background-image:url('../spinner.gif');
                 background-repeat:no-repeat;
                 background-attachment:fixed;
                 background-position:center;     
@@ -50,14 +50,14 @@
             home
             {
                 position:fixed;
-                top:10px;
-                left:10px;
+                top:20px;
+                left:20px;
             }
             donate
             {
                 position:fixed;
-                top:10px;
-                right:10px;
+                top:20px;
+                right:20px;
             }
             div#stock {
                 position: fixed;
@@ -74,8 +74,8 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script src="jquery-2.1.0.min.js"></script>
-        <script type="text/javascript" src="geolocator.min.js"></script>
+        <script src="../jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="../geolocator.min.js"></script>
         <script type="text/javascript">
             window.onload = function () {
                 jQuery(document).ready(function($) {
@@ -122,15 +122,13 @@
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><font size="5"><b><a href="http://qTes.la">qTesla</a></b></font></home>
-        <donate><font size="5"><b><a href="donate.html">Donate</a></b></font></donate>
+        <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+        <donate><span style="font-size: 24px"><a href="../help">Help</a></span></donate>
         <center>
             <br>
             <br>
-            <font size="6" ><a href="forecast.html">Forecast</a> &middot; <a href="radar.html">Radar</a> &middot; <a href="plugshare.html">PlugShare</a> &middot; <a href="waze.html">Waze</a> &middot; <a href="stock.html" class="red">Stock</a></font>
-        </center>    
-            <br>
-            <br>
+            <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../plugshare">PlugShare</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../stock" class="red">Stock</a></span>
+        </center>
             <br>
             <br>
             <div id="stock"></div>
