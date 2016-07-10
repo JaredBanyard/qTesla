@@ -81,9 +81,13 @@
         <script src="../jquery-2.1.0.min.js"></script>
         <script type="text/javascript">
             $(window).resize(function() {
+                document.body.style.backgroundImage="url('../spinner.gif')";
                 var iframe = document.getElementById('waze_iframe');
                 iframe.src = iframe.src;
             });
+            document.getElementById('waze_iframe').onload= function() {
+                document.body.style.backgroundImage="none"                
+            };
         </script>
     </head>
 
