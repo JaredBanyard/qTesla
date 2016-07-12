@@ -85,9 +85,6 @@
                 var iframe = document.getElementById('plugshare_iframe');
                 iframe.src = iframe.src;
             });
-            document.getElementById('plugshare_iframe').onload= function() {
-                document.body.style.backgroundImage="none"                
-            };
         </script>
     </head>
 
@@ -104,5 +101,10 @@
         <div id="plugshare">
             <iframe id="plugshare_iframe" src="http://tesla.plugshare.com" frameborder="0" />
         </div>
+        <script type="text/javascript">
+            document.getElementById('plugshare_iframe').onload= function() {
+                document.body.style.backgroundImage="none"                
+            };
+        </script>
     </body>
 </html>
