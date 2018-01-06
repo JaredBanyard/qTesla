@@ -75,27 +75,86 @@
         </script>
 
         <script src="../jquery-2.1.0.min.js"></script>
-        <script type="text/javascript">
+        <script src="../Chart.js"></script>
+        <script src="../moment.js"></script
+>        <script type="text/javascript">           
             window.onload = function () {
+
+                var timeFormat = 'MM/DD HH:mm';
+                var interval = "15min";
+                var property = "Time Series (" + interval + ")";
+
+                var dates = [];
+                var data = [];
+
                 jQuery(document).ready(function($) {
                     $.ajax({
-                        url : 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact&apikey=L6HU530MTINYLFEX',
+                        url : "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=" + interval + "&outputsize=compact&apikey=L6HU530MTINYLFEX",
                         dataType : "json",
                         success : function(json) {
                             console.log(json);
-                            if(json.hasOwnProperty('Time Series (5min)')) {                              
-                                var lastTradeDate = Object.keys(json['Time Series (5min)'])[0];
-                                var lastTrade = Object.values(json['Time Series (5min)'])[0]['4. close'];
+                            if(json.hasOwnProperty(property)) {                              
+                                var lastTradeDate = Object.keys(json[property])[0];
+                                var lastTrade = Object.values(json[property])[0]['4. close'];
+                                var prevTrade = Object.values(json[property])[1]['4. close'];
 
                                 console.log(lastTradeDate + ": " + lastTrade);
 
                                 var stockOutput = '<center><font size="8" color="white"><b>'
+
+                                if (lastTrade > prevTrade) {
+                                    stockOutput = '<center><font size="8" color="green"><b>';
+                                } else {
+                                    stockOutput = '<center><font size="8" color="red"><b>';
+                                }
+
+                                stockOutput = stockOutput +
                                     + lastTrade + '</b></font><br />'
                                     + '<font size="4">' + lastTradeDate + '</font></center>';
                                 
                                 document.getElementById('stock').innerHTML = stockOutput;
                                 document.body.style.backgroundImage="none"
+
+                                $.each(json[property], function(key, value) {
+                                    dates.push(moment(key).format(timeFormat));
+                                    data.push(value['4. close']);
+                                    console.log(moment(key).format(timeFormat) + " : " + value['4. close']);
+                                });
+
+                                // var dataArray = "[" + data.join(",") + "]";
+
+                                var ctx = document.getElementById("chart").getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: dates.reverse(),
+                                        datasets: [{
+                                            label: 'TSLA',
+                                            data: data.reverse(),
+                                            backgroundColor: [
+                                                'rgba(255,255,255,0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(255,255,255,1)',
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        legend: {
+                                            display: false 
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
                             }
+
+                            // console.log("[" + data.join(",") + "]");
                             // var quote = $(xml).find('quote');
                             // var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
                             // var percentChange = quote.find('PercentChange').text();
@@ -144,6 +203,13 @@
             <br>
             <br>
             <div id="stock"></div>
-        </center>       
+            <br>
+            <br>
+            <br>
+            <br>
+            <div style="width:75%; margin:0 auto;" align="center">
+                <canvas id="chart"></canvas>
+            </div> 
+        </center>                  
     </body>
 </html>
