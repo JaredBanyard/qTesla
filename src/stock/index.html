@@ -75,45 +75,57 @@
         </script>
 
         <script src="../jquery-2.1.0.min.js"></script>
-        <script type="text/javascript" src="../geolocator.min.js"></script>
         <script type="text/javascript">
             window.onload = function () {
                 jQuery(document).ready(function($) {
                     $.ajax({
-                        url : 'http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20where%20symbol%20in%20%28%22TSLA%22%29&env=store://datatables.org/alltableswithkeys',
-                        dataType : "xml",
-                        success : function(xml) {
-                            console.log(xml);
-                            var quote = $(xml).find('quote');
-                            var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
-                            var percentChange = quote.find('PercentChange').text();
-                            var daysLow = quote.find('DaysLow').text();
-                            var daysHigh = quote.find('DaysHigh').text();
-                            var lastTradeDate = quote.find('LastTradeDate').text();
-                            var isPositive;
-                            if(percentChange.charAt(0) == '+') {
-                                isPositive = true;
-                            } else if(percentChange.charAt(0) == '-') {
-                                isPositive = false;
-                            } else {
-                                isPositive = null;
-                            }
-                            if(isPositive != null) {
-                                var stockOutput;
-                                if (isPositive) {
-                                    stockOutput = '<center><font size="8" color="green"><b>';
-                                } else {
-                                    stockOutput = '<center><font size="8" color="red"><b>';
-                                }
-                                stockOutput = stockOutput 
-                                + lastTrade + '<br />'
-                                + percentChange + '</b></font><br /><br />'
-                                + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
-                                + '<font size="4">' + lastTradeDate + '</font></center>';
+                        url : 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact&apikey=L6HU530MTINYLFEX',
+                        dataType : "json",
+                        success : function(json) {
+                            console.log(json);
+                            if(json.hasOwnProperty('Time Series (5min)')) {                              
+                                var lastTradeDate = Object.keys(json['Time Series (5min)'])[0];
+                                var lastTrade = Object.values(json['Time Series (5min)'])[0]['4. close'];
+
+                                console.log(lastTradeDate + ": " + lastTrade);
+
+                                var stockOutput = '<center><font size="8" color="white"><b>'
+                                    + lastTrade + '</b></font><br />'
+                                    + '<font size="4">' + lastTradeDate + '</font></center>';
                                 
                                 document.getElementById('stock').innerHTML = stockOutput;
                                 document.body.style.backgroundImage="none"
                             }
+                            // var quote = $(xml).find('quote');
+                            // var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
+                            // var percentChange = quote.find('PercentChange').text();
+                            // var daysLow = quote.find('DaysLow').text();
+                            // var daysHigh = quote.find('DaysHigh').text();
+                            // var lastTradeDate = quote.find('LastTradeDate').text();
+                            // var isPositive;
+                            // if(percentChange.charAt(0) == '+') {
+                            //     isPositive = true;
+                            // } else if(percentChange.charAt(0) == '-') {
+                            //     isPositive = false;
+                            // } else {
+                            //     isPositive = null;
+                            // }
+                            // if(isPositive != null) {
+                            //     var stockOutput;
+                            //     if (isPositive) {
+                            //         stockOutput = '<center><font size="8" color="green"><b>';
+                            //     } else {
+                            //         stockOutput = '<center><font size="8" color="red"><b>';
+                            //     }
+                            //     stockOutput = stockOutput 
+                            //     + lastTrade + '<br />'
+                            //     + percentChange + '</b></font><br /><br />'
+                            //     + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
+                            //     + '<font size="4">' + lastTradeDate + '</font></center>';
+                                
+                            //     document.getElementById('stock').innerHTML = stockOutput;
+                            //     document.body.style.backgroundImage="none"
+                            // }
                         }
                     });
                 });
