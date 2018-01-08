@@ -74,9 +74,9 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script src="../jquery-2.1.0.min.js"></script>
-        <script src="../Chart.js"></script>
-        <script src="../moment.js"></script
+        <script src="../jquery-3.2.1.min.js"></script>
+        <!-- <script src="chart.min.js"></script> -->
+        <!-- <script src="moment.min.js"></script -->
 >        <script type="text/javascript">           
             window.onload = function () {
 
@@ -89,11 +89,13 @@
 
                 jQuery(document).ready(function($) {
                     $.ajax({
-                        url : "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=" + interval + "&outputsize=compact&apikey=L6HU530MTINYLFEX",
+                        url : "http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=" + interval + "&outputsize=compact&apikey=L6HU530MTINYLFEX",
                         dataType : "json",
                         success : function(json) {
                             console.log(json);
-                            if(json.hasOwnProperty(property)) {                              
+                            document.body.style.backgroundImage="none"
+
+                            if(json.hasOwnProperty(property)) {       
                                 var lastTradeDate = Object.keys(json[property])[0];
                                 var lastTrade = Object.values(json[property])[0]['4. close'];
                                 var prevTrade = Object.values(json[property])[1]['4. close'];
@@ -113,45 +115,47 @@
                                     + '<font size="4">' + lastTradeDate + '</font></center>';
                                 
                                 document.getElementById('stock').innerHTML = stockOutput;
-                                document.body.style.backgroundImage="none"
+                                
 
-                                $.each(json[property], function(key, value) {
-                                    dates.push(moment(key).format(timeFormat));
-                                    data.push(value['4. close']);
-                                    console.log(moment(key).format(timeFormat) + " : " + value['4. close']);
-                                });
+                                // $.each(json[property], function(key, value) {
+                                //     dates.push(moment(key).format(timeFormat));
+                                //     data.push(value['4. close']);
+                                //     console.log(moment(key).format(timeFormat) + " : " + value['4. close']);
+                                // });
 
-                                // var dataArray = "[" + data.join(",") + "]";
+                                // // var dataArray = "[" + data.join(",") + "]";
 
-                                var ctx = document.getElementById("chart").getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: dates.reverse(),
-                                        datasets: [{
-                                            label: 'TSLA',
-                                            data: data.reverse(),
-                                            backgroundColor: [
-                                                'rgba(255,255,255,0.2)',
-                                            ],
-                                            borderColor: [
-                                                'rgba(255,255,255,1)',
-                                            ],
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        legend: {
-                                            display: false 
-                                        },
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                }
-                                            }]
-                                        }
-                                    }
-                                });
+                                // var ctx = document.getElementById("chart").getContext('2d');
+                                // var myChart = new Chart(ctx, {
+                                //     type: 'line',
+                                //     data: {
+                                //         labels: dates.reverse(),
+                                //         datasets: [{
+                                //             label: 'TSLA',
+                                //             data: data.reverse(),
+                                //             backgroundColor: [
+                                //                 'rgba(255,255,255,0.2)',
+                                //             ],
+                                //             borderColor: [
+                                //                 'rgba(255,255,255,1)',
+                                //             ],
+                                //             borderWidth: 1
+                                //         }]
+                                //     },
+                                //     options: {
+                                //         legend: {
+                                //             display: false 
+                                //         },
+                                //         scales: {
+                                //             yAxes: [{
+                                //                 ticks: {
+                                //                 }
+                                //             }]
+                                //         }
+                                //     }
+                                // });
+                            } else {
+                                document.getElementById('stock').innerHTML = "Error";
                             }
 
                             // console.log("[" + data.join(",") + "]");
@@ -185,7 +189,14 @@
                             //     document.getElementById('stock').innerHTML = stockOutput;
                             //     document.body.style.backgroundImage="none"
                             // }
-                        }
+
+                            document.body.style.backgroundImage="none"
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            document.body.style.backgroundImage="none"
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }   
                     });
                 });
             }
@@ -198,7 +209,7 @@
         <center>
             <br>
             <br>
-            <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../plugshare">PlugShare</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../stock" class="red">Stock</a></span>
+            <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../news">News</a> &middot; <a href="../stock" class="red">Stock</a></span>
         </center>
             <br>
             <br>
