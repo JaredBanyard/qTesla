@@ -51,6 +51,9 @@
                 background-position:center;      
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
+            table, th, td {
+               border: 0px;
+            }
             home
             {
                 position:fixed;
@@ -86,7 +89,7 @@
         <script type="text/javascript">           
             window.onload = function () {
 
-                var url = 'https://newsapi.org/v2/top-headlines?' +
+                var url = 'http://newsapi.org/v2/top-headlines?' +
                           'country=us&' +
                           'apiKey=88ba6643d4694c458d1834a5d5308ece';
 
@@ -95,23 +98,36 @@
                         url : url,
                         dataType : "json",
                         success : function(json) {
-                            var articles = "";                                                          
+                            var articles = '<table style="width:90%">';   
+                            var imageUrl;                                                      
                             $.each(json.articles, function(i, item) {
-                                articles 
-                                    +=  '<img src="' + item.urlToImage + '" height=72><br />'
-                                    + '<font size="6"><a href="' + item.url + '">' + item.title + '</a></font><br />' 
-                                    + '<font size="4">' + item.description + '</font><br />' 
-                                    + '<font size="2">' + item.publishedAt + '</font><br /><br />' ;
+
+                                if (item.urlToImage) {
+                                    imageUrl = item.urlToImage;
+                                }  else {
+                                    imageUrl = "newsicon4.png"
+                                }
+
+                                articles += '<tr>'
+                                    + '<td align="center"><img src="' + imageUrl + '" height=72></td>'
+                                    + '<td><font size="5"><a href="' + item.url + '">' + item.title + '</a></font><br />';
+
+                                if (item.description) { 
+                                    articles += '<font size="3">' + item.description + '</font><br />' 
+                                }
+
+                                articles += '<font size="2">' + item.source.name + ' - ' + item.publishedAt + '</font></td>' 
+                                    + '</tr>';
                             });
+                            articles += '</table>';
 
                             document.getElementById('news').innerHTML = articles;
 
                             document.body.style.backgroundImage="none"
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
+                        error: function (xhr, textStatus, thrownError) {
                             document.body.style.backgroundImage="none"
-                            alert(xhr.status);
-                            alert(thrownError);
+                            alert(xhr.status + " " + textStatus + " " + thrownError);
                         }   
                     });
                 });
