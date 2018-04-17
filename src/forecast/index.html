@@ -69,9 +69,17 @@
         </script>
 
         <script src="../jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="../geolocator.min.js"></script>
+        <script type="text/javascript" src="../geolocator2.min.js"></script>
         <script type="text/javascript">
-            // Success Callback
+
+            geolocator.config({
+                language: "en",
+                google: {
+                    version: "3",
+                    key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+                }
+            });
+
             function onGeoSuccess(location) {
                 var unitCode;
                 if (location.address.countryCode == "US") {
@@ -84,7 +92,7 @@
                 getForecast();
                 var loop = setInterval(function(){getForecast()}, 120000);
                 function getForecast() {
-                    var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=' + location.coords.latitude 
+                    var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=' + location.coords.latitude 
                         + '&lon=' + location.coords.longitude 
                         + '&name=' + location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + unitCode + '"></iframe>';
                     console.log(strForecast);
@@ -122,15 +130,27 @@
                 }
 
             }
-            // Error Callback
+
             function onGeoError(message) {
                 console.log(message);
                 document.body.style.backgroundImage="url('../teslalogo.png')";
             }
-            // Load Event Handler
+
             window.onload = function () {
-                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumWait: 5000,     // max wait time for desired accuracy
+                    maximumAge: 0,          // disable cache
+                    desiredAccuracy: 1000,    // meters
+                    fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+                    addressLookup: true,    // requires Google API key if true
+                    timezone: true          // requires Google API key if true
+                };
+                geolocator.locate(options, function (err, location) {
+                    if (err) return onGeoError(err);
+                    onGeoSuccess(location)
+                });
             }
         </script>
     </head>

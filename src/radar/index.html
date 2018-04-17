@@ -84,12 +84,20 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script type="text/javascript" src="../geolocator.min.js"></script>
+        <script type="text/javascript" src="../geolocator2.min.js"></script>
         <script type="text/javascript">
-            // Success Callback
+
+            geolocator.config({
+                language: "en",
+                google: {
+                    version: "3",
+                    key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+                }
+            });
+
             function onGeoSuccess(location) {
                 console.log(location);      
-                var strApi = 'http://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
+                var strApi = 'https://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
                     '&centerlat=' + location.coords.latitude +
                     '&centerlon=' + location.coords.longitude + 
                     '&width=800&height=1000&radius=100&newmaps=1&num=12&delay=25&noclutter=1';
@@ -100,16 +108,28 @@
                 };
                 radarImage.src = strApi;
             }
-            // Error Callback
+
             function onGeoError(message) {
                 console.log(message);
                 document.getElementById('radar').style.backgroundImage="none";
                 document.getElementById('spinner').style.backgroundImage="url('../teslalogo.png')";
             }
-            // Load Event Handler
+
             window.onload = function () {
-                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumWait: 5000,     // max wait time for desired accuracy
+                    maximumAge: 0,          // disable cache
+                    desiredAccuracy: 1000,    // meters
+                    fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+                    addressLookup: true,    // requires Google API key if true
+                    timezone: true          // requires Google API key if true
+                };
+                geolocator.locate(options, function (err, location) {
+                    if (err) return onGeoError(err);
+                    onGeoSuccess(location)
+                });
             }
         </script>
     </head>
