@@ -74,132 +74,9 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script src="../jquery-3.2.1.min.js"></script>
-        <!-- <script src="chart.min.js"></script> -->
-        <!-- <script src="moment.min.js"></script -->
-        <script type="text/javascript">           
+        <script type="text/javascript">
             window.onload = function () {
-
-                var timeFormat = 'MM/DD HH:mm';
-                var interval = "15min";
-                var property = "Time Series (" + interval + ")";
-
-                var dates = [];
-                var data = [];
-
-                jQuery(document).ready(function($) {
-                    $.ajax({
-                        url : "http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=" + interval + "&outputsize=compact&apikey=L6HU530MTINYLFEX",
-                        dataType : "json",
-                        success : function(json) {
-                            console.log(json);
-                            alert(JSON.stringify(json));
-
-                            if(json.hasOwnProperty(property)) {       
-                                var lastTradeDate = Object.keys(json[property])[0];
-                                var lastTrade = Object.values(json[property])[0]['4. close'];
-                                var prevTrade = Object.values(json[property])[1]['4. close'];
-
-                                console.log(lastTradeDate + ": " + lastTrade);
-                                alert(lastTradeDate + ": " + lastTrade);
-
-                                var stockOutput = '<center><font size="8" color="white"><b>'
-
-                                if (lastTrade > prevTrade) {
-                                    stockOutput = '<center><font size="8" color="green"><b>';
-                                } else {
-                                    stockOutput = '<center><font size="8" color="red"><b>';
-                                }
-
-                                stockOutput = stockOutput +
-                                    + lastTrade + '</b></font><br />'
-                                    + '<font size="4">' + lastTradeDate + '</font></center>';
-                                
-                                document.getElementById('stock').innerHTML = stockOutput;
-                                
-
-                                // $.each(json[property], function(key, value) {
-                                //     dates.push(moment(key).format(timeFormat));
-                                //     data.push(value['4. close']);
-                                //     console.log(moment(key).format(timeFormat) + " : " + value['4. close']);
-                                // });
-
-                                // // var dataArray = "[" + data.join(",") + "]";
-
-                                // var ctx = document.getElementById("chart").getContext('2d');
-                                // var myChart = new Chart(ctx, {
-                                //     type: 'line',
-                                //     data: {
-                                //         labels: dates.reverse(),
-                                //         datasets: [{
-                                //             label: 'TSLA',
-                                //             data: data.reverse(),
-                                //             backgroundColor: [
-                                //                 'rgba(255,255,255,0.2)',
-                                //             ],
-                                //             borderColor: [
-                                //                 'rgba(255,255,255,1)',
-                                //             ],
-                                //             borderWidth: 1
-                                //         }]
-                                //     },
-                                //     options: {
-                                //         legend: {
-                                //             display: false 
-                                //         },
-                                //         scales: {
-                                //             yAxes: [{
-                                //                 ticks: {
-                                //                 }
-                                //             }]
-                                //         }
-                                //     }
-                                // });
-                            } else {
-                                document.getElementById('stock').innerHTML = "Error";
-                            }
-
-                            // console.log("[" + data.join(",") + "]");
-                            // var quote = $(xml).find('quote');
-                            // var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
-                            // var percentChange = quote.find('PercentChange').text();
-                            // var daysLow = quote.find('DaysLow').text();
-                            // var daysHigh = quote.find('DaysHigh').text();
-                            // var lastTradeDate = quote.find('LastTradeDate').text();
-                            // var isPositive;
-                            // if(percentChange.charAt(0) == '+') {
-                            //     isPositive = true;
-                            // } else if(percentChange.charAt(0) == '-') {
-                            //     isPositive = false;
-                            // } else {
-                            //     isPositive = null;
-                            // }
-                            // if(isPositive != null) {
-                            //     var stockOutput;
-                            //     if (isPositive) {
-                            //         stockOutput = '<center><font size="8" color="green"><b>';
-                            //     } else {
-                            //         stockOutput = '<center><font size="8" color="red"><b>';
-                            //     }
-                            //     stockOutput = stockOutput 
-                            //     + lastTrade + '<br />'
-                            //     + percentChange + '</b></font><br /><br />'
-                            //     + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
-                            //     + '<font size="4">' + lastTradeDate + '</font></center>';
-                                
-                            //     document.getElementById('stock').innerHTML = stockOutput;
-                            //     document.body.style.backgroundImage="none"
-                            // }
-
-                            document.body.style.backgroundImage="none"
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            document.body.style.backgroundImage="none"
-                            alert(xhr.status);
-                            alert(thrownError);
-                        }   
-                    });
-                });
+                document.body.style.backgroundImage="none"          
             }
         </script>
     </head>
@@ -214,7 +91,9 @@
         </center>
             <br>
             <br>
-            <div id="stock"></div>
+            <div id="stock">
+                <iframe src="https://investingwidgets.com/leading-stocks?theme=darkTheme&hideTitle=true&pairs=13994,6369,8274,6435,6408,26490,251,8092,13063,6497" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe><div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif;">Powered by <a href="https://www.investing.com?utm_source=WMT&amp;utm_medium=referral&amp;utm_campaign=LEADING_STOCKS&amp;utm_content=Footer%20Link" target="_blank" rel="nofollow">Investing.com</a></div>
+            </div>
             <br>
             <br>
             <br>
