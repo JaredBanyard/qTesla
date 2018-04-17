@@ -59,12 +59,6 @@
                 top:20px;
                 right:20px;
             }
-            clock
-            {
-                position:fixed;
-                bottom:20px;
-                right:20px;
-            }
             #clock {
                 position: absolute;
                 top: 50%;
@@ -118,11 +112,12 @@
             }
             // Error Callback
             function onGeoError(message) {
-                console.log(message);
+                document.body.style.backgroundImage="none";        
+                alert(message);
             }
             // Load Event Handler
             window.onload = function () {
-                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                var html5Options = { enableHighAccuracy: false, timeout: 3000, maximumAge: 0 };
                 geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
                 
             }
@@ -138,7 +133,6 @@
             <br>
             <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../news">News</a> &middot;  <a href="../stock">Stock</a></span>
         </center>
-        <clock><a href="../clock" target="main"><img src="../clockbtn.png" /></a></clock>  
         <div id="clock" />
     </body>
 </html>

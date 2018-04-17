@@ -98,7 +98,7 @@
                         url : url,
                         dataType : "json",
                         success : function(json) {
-                            var articles = '<table style="width:90%">';   
+                            var articles = '<table style="width:95%" cellpadding="5">';   
                             var imageUrl;                                                      
                             $.each(json.articles, function(i, item) {
 
@@ -109,7 +109,7 @@
                                 }
 
                                 articles += '<tr>'
-                                    + '<td align="center"><img src="' + imageUrl + '" height=72></td>'
+                                    + '<td align="center"><img src="' + imageUrl + '" height=96></td>'
                                     + '<td><font size="5"><a href="' + item.url + '">' + item.title + '</a></font><br />';
 
                                 if (item.description) { 
@@ -144,9 +144,7 @@
             <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../news" class="red">News</a> &middot; <a href="../stock">Stock</a></span>
         <br>
         <br>
-        <br>
         <div id="news">
-            Loading...
         </div>
         </center>
     </body>

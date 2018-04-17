@@ -69,7 +69,7 @@
         </script>
 
         <script src="../jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="../geolocator2.min.js"></script>
+        <script type="text/javascript" src="../geolocator.min.js"></script>
         <script type="text/javascript">
 
             geolocator.config({
@@ -132,20 +132,18 @@
             }
 
             function onGeoError(message) {
-                console.log(message);
-                document.body.style.backgroundImage="url('../teslalogo.png')";
+                document.body.style.backgroundImage="none"          
+                alert(xhr.status + " " + textStatus + " " + thrownError);
             }
 
             window.onload = function () {
                 var options = {
-                    enableHighAccuracy: true,
-                    timeout: 5000,
-                    maximumWait: 5000,     // max wait time for desired accuracy
+                    enableHighAccuracy: false,
+                    timeout: 3000,
+                    maximumWait: 3000,     // max wait time for desired accuracy
                     maximumAge: 0,          // disable cache
-                    desiredAccuracy: 1000,    // meters
                     fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
-                    addressLookup: true,    // requires Google API key if true
-                    timezone: true          // requires Google API key if true
+                    addressLookup: true    // requires Google API key if true
                 };
                 geolocator.locate(options, function (err, location) {
                     if (err) return onGeoError(err);
