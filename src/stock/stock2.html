@@ -1,0 +1,226 @@
+<!-- 
+    This file is part of QuickTesla (http://qTes.la)
+
+    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
+
+    QuickTesla is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, any later version.
+
+    QuickTesla is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>qTesla Stock</title>
+		<link rel="icon" 
+		      type="image/png" 
+		      href="../favicon.png">
+        <style type="text/css">
+            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
+            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
+            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
+            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
+            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
+            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
+            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
+            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
+            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
+            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
+            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
+            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
+            a img {border: none;}   
+            input:focus, textarea:focus, *:focus {outline: none;}
+            body
+            {              
+                color:#FFFFFF;
+                background-color:#000000;
+                background-image:url('../spinner.gif');
+                background-repeat:no-repeat;
+                background-attachment:fixed;
+                background-position:center;     
+                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+            home
+            {
+                position:fixed;
+                top:20px;
+                left:20px;
+            }
+            donate
+            {
+                position:fixed;
+                top:20px;
+                right:20px;
+            }
+            div#stock {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                color:#FFFFFF;
+            }
+        </style>
+
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-49492188-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
+        </script>
+
+        <script src="../jquery-3.2.1.min.js"></script>
+        <!-- <script src="chart.min.js"></script> -->
+        <!-- <script src="moment.min.js"></script -->
+>        <script type="text/javascript">           
+            window.onload = function () {
+
+                var timeFormat = 'MM/DD HH:mm';
+                var interval = "15min";
+                var property = "Time Series (" + interval + ")";
+
+                var dates = [];
+                var data = [];
+
+                jQuery(document).ready(function($) {
+                    $.ajax({
+                        url : "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=" + interval + "&outputsize=compact&apikey=L6HU530MTINYLFEX",
+                        dataType : "json",
+                        success : function(json) {
+                            console.log(json);
+                            document.body.style.backgroundImage="none"
+
+                            if(json.hasOwnProperty(property)) {       
+                                var lastTradeDate = Object.keys(json[property])[0];
+                                var lastTrade = Object.values(json[property])[0]['4. close'];
+                                var prevTrade = Object.values(json[property])[1]['4. close'];
+
+                                console.log(lastTradeDate + ": " + lastTrade);
+
+                                var stockOutput = '<center><font size="8" color="white"><b>'
+
+                                if (lastTrade > prevTrade) {
+                                    stockOutput = '<center><font size="8" color="green"><b>';
+                                } else {
+                                    stockOutput = '<center><font size="8" color="red"><b>';
+                                }
+
+                                stockOutput = stockOutput +
+                                    + lastTrade + '</b></font><br />'
+                                    + '<font size="4">' + lastTradeDate + '</font></center>';
+                                
+                                document.getElementById('stock').innerHTML = stockOutput;
+                                
+
+                                // $.each(json[property], function(key, value) {
+                                //     dates.push(moment(key).format(timeFormat));
+                                //     data.push(value['4. close']);
+                                //     console.log(moment(key).format(timeFormat) + " : " + value['4. close']);
+                                // });
+
+                                // // var dataArray = "[" + data.join(",") + "]";
+
+                                // var ctx = document.getElementById("chart").getContext('2d');
+                                // var myChart = new Chart(ctx, {
+                                //     type: 'line',
+                                //     data: {
+                                //         labels: dates.reverse(),
+                                //         datasets: [{
+                                //             label: 'TSLA',
+                                //             data: data.reverse(),
+                                //             backgroundColor: [
+                                //                 'rgba(255,255,255,0.2)',
+                                //             ],
+                                //             borderColor: [
+                                //                 'rgba(255,255,255,1)',
+                                //             ],
+                                //             borderWidth: 1
+                                //         }]
+                                //     },
+                                //     options: {
+                                //         legend: {
+                                //             display: false 
+                                //         },
+                                //         scales: {
+                                //             yAxes: [{
+                                //                 ticks: {
+                                //                 }
+                                //             }]
+                                //         }
+                                //     }
+                                // });
+                            } else {
+                                document.getElementById('stock').innerHTML = "Error";
+                            }
+
+                            // console.log("[" + data.join(",") + "]");
+                            // var quote = $(xml).find('quote');
+                            // var lastTrade = parseFloat(quote.find('LastTradePriceOnly').text()).toFixed(2);
+                            // var percentChange = quote.find('PercentChange').text();
+                            // var daysLow = quote.find('DaysLow').text();
+                            // var daysHigh = quote.find('DaysHigh').text();
+                            // var lastTradeDate = quote.find('LastTradeDate').text();
+                            // var isPositive;
+                            // if(percentChange.charAt(0) == '+') {
+                            //     isPositive = true;
+                            // } else if(percentChange.charAt(0) == '-') {
+                            //     isPositive = false;
+                            // } else {
+                            //     isPositive = null;
+                            // }
+                            // if(isPositive != null) {
+                            //     var stockOutput;
+                            //     if (isPositive) {
+                            //         stockOutput = '<center><font size="8" color="green"><b>';
+                            //     } else {
+                            //         stockOutput = '<center><font size="8" color="red"><b>';
+                            //     }
+                            //     stockOutput = stockOutput 
+                            //     + lastTrade + '<br />'
+                            //     + percentChange + '</b></font><br /><br />'
+                            //     + '<font size="6">' + daysLow + ' - ' + daysHigh + '</font><br /><br />'
+                            //     + '<font size="4">' + lastTradeDate + '</font></center>';
+                                
+                            //     document.getElementById('stock').innerHTML = stockOutput;
+                            //     document.body.style.backgroundImage="none"
+                            // }
+
+                            document.body.style.backgroundImage="none"
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            document.body.style.backgroundImage="none"
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }   
+                    });
+                });
+            }
+        </script>
+    </head>
+
+    <body style="margin:0px;padding:0px;overflow:hidden">
+        <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+        <donate><span style="font-size: 24px"><a href="../help">Help</a></span></donate>
+        <center>
+            <br>
+            <br>
+            <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../news">News</a> &middot; <a href="../stock" class="red">Stock</a></span>
+        </center>
+            <br>
+            <br>
+            <div id="stock"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div style="width:75%; margin:0 auto;" align="center">
+                <canvas id="chart"></canvas>
+            </div> 
+        </center>                  
+    </body>
+</html>
