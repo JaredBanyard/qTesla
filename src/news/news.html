@@ -15,10 +15,14 @@
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
+
+<!-- https://www.reddit.com/r/teslamotors/hot.json -->
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>qTesla Donate</title>
+        <title>qTesla news</title>
 		<link rel="icon" 
 		      type="image/png" 
 		      href="../favicon.png">
@@ -41,7 +45,14 @@
             {              
                 color:#FFFFFF;
                 background-color:#000000;  
+                background-image:url('../spinner.gif');
+                background-repeat:no-repeat;
+                background-attachment:fixed;
+                background-position:center;      
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+            }
+            table, th, td {
+               border: 0px;
             }
             home
             {
@@ -55,59 +66,86 @@
                 top:20px;
                 right:20px;
             }
-            div#paypal {
+            div#news {
                 position: fixed;
                 width: 100%;
                 height: 100%;
             }
-            div#paypal > iframe {
+            div#news > iframe {
                 display: block;
                 width: 100%;
                 height: 100%;
                 border: none;
             }
         </style>
-
+        
         <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-49492188-1']);
         _gaq.push(['_trackPageview']);
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
+        <script src="../jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">           
+            window.onload = function () {
 
+                var url = 'https://newsapi.org/v2/top-headlines?' +
+                          'country=us&' +
+                          'apiKey=88ba6643d4694c458d1834a5d5308ece';
+
+                jQuery(document).ready(function($) {
+                    $.ajax({
+                        url : url,
+                        dataType : "json",
+                        success : function(json) {
+                            var articles = '<table style="width:95%" cellpadding="5">';   
+                            var imageUrl;                                                      
+                            $.each(json.articles, function(i, item) {
+
+                                if (item.urlToImage) {
+                                    imageUrl = item.urlToImage;
+                                }  else {
+                                    imageUrl = "newsicon.png"
+                                }
+
+                                articles += '<tr>'
+                                    + '<td align="center"><img src="' + imageUrl + '" height=96></td>'
+                                    + '<td><font size="5"><a href="' + item.url + '">' + item.title + '</a></font><br />';
+
+                                if (item.description) { 
+                                    articles += '<font size="3">' + item.description + '</font><br />' 
+                                }
+
+                                articles += '<font size="2">' + item.source.name + ' - ' + item.publishedAt + '</font></td>' 
+                                    + '</tr>';
+                            });
+                            articles += '</table>';
+
+                            document.getElementById('news').innerHTML = articles;
+
+                            document.body.style.backgroundImage="none"
+                        },
+                        error: function (xhr, textStatus, thrownError) {
+                            document.body.style.backgroundImage="none"
+                            alert(xhr.status + " " + textStatus + " " + thrownError);
+                        }   
+                    });
+                });
+            }
+        </script>
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
         <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="../help" class="red">Help</a></span></donate>
+        <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
         <center>
             <br>
             <br>
-            <span style="font-size: 38px"><a href="../forecast">Forecast</a> &middot; <a href="../radar">Radar</a> &middot; <a href="../waze">Waze</a> &middot; <a href="../news">News</a> &middot; <a href="../stock">Stock</a></span>
-        </center>
+            <span style="font-size: 38px"><a href="../forecast/forecast.html">Forecast</a> &middot; <a href="../radar/radar.html">Radar</a> &middot; <a href="../waze/waze.html">Waze</a> &middot; <a href="../news/news.html" class="red">News</a> &middot; <a href="../stock/stock.html">Stock</a></span>
         <br>
         <br>
-        <center>
-            <span style="font-size: 24px">
-                Hey everybody! Hopefully you are finding this site helpful!<br>
-                <br>
-                If you have any problems or suggestions feel free to email me at <a href="mailto:jared.banyard@gmail.com" class="red">jared.banyard@gmail.com</a><br>
-                <br>
-                or check out these <a href="https://www.reddit.com/r/teslamotors/comments/4s3pil/httpqtesla_an_update_for_the_tesla_screen_web/" target="_blank" class="red">Reddit</a> or <a href="http://www.teslamotorsclub.com/showthread.php/29355-qTes-la" target="_blank" class="red">TMC</a> posts.<br>
-            </span>
-            <br>
-            <br>
-            I hate to do this, but these dynamic radar images are going to be expensive when we start getting over 500 requests a day.<br>
-            <br>
-            Please help if you can.<br>
-            <br>
-            <br>
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="FK6ETJBEXTJES">
-            <input type="image" src="paypaldonate.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
+        <div id="news">
+        </div>
         </center>
     </body>
 </html>
