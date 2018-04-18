@@ -78,7 +78,15 @@
         <script src="../jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="../geolocator.min.js"></script>
         <script type="text/javascript">
-            // Success Callback
+
+            geolocator.config({
+                language: "en",
+                google: {
+                    version: "3",
+                    key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+                }
+            });
+
             function onGeoSuccess(location) {
                 console.log(location);
                 var strSensor = false;
@@ -110,16 +118,26 @@
                     });
                 });
             }
-            // Error Callback
+
             function onGeoError(message) {
-                document.body.style.backgroundImage="none";        
-                alert(message);
+                document.body.style.backgroundImage="none"          
+                alert(xhr.status + " " + textStatus + " " + thrownError);
             }
-            // Load Event Handler
+
             window.onload = function () {
-                var html5Options = { enableHighAccuracy: false, timeout: 3000, maximumAge: 0 };
-                geolocator.locate(onGeoSuccess, onGeoError, 0, html5Options, null);
+                var options = {
+                    enableHighAccuracy: false,
+                    timeout: 3000,
+                    maximumWait: 3000,     // max wait time for desired accuracy
+                    maximumAge: 0,          // disable cache
+                    fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+                    timezone: true
+                };
                 
+                geolocator.locate(options, function (err, location) {
+                    if (err) return onGeoError(err);
+                    onGeoSuccess(location)
+                });
             }
         </script>
         <script src="coolclock.js" type="text/javascript"></script>
