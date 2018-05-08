@@ -21,7 +21,7 @@
         <title>qTesla</title>
 		<link rel="icon" 
 		      type="image/png" 
-		      href="/favicon.png">
+		      href="favicon.png">
         <style type="text/css">
             a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
             a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
@@ -41,10 +41,6 @@
             {              
                 color:#FFFFFF;
                 background-color:#000000;
-                background-image:url('/teslalogo.png');
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;      
                 font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
             }
             home
@@ -59,11 +55,12 @@
                 top:20px;
                 right:20px;
             }
-            clock
+            logo
             {
-                position:fixed;
-                bottom:20px;
-                right:60px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         </style>
         
@@ -77,13 +74,13 @@
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><span style="font-size: 28px"><a href="/" class="red">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="/help/help.html">Help</a></span></donate>
+        <home><span style="font-size: 28px"><a href="./" class="red">qTesla</a></span></home>
+        <donate><span style="font-size: 24px"><a href="./help/help.html">Help</a></span></donate>
         <center>
             <br>
             <br>
-            <span style="font-size: 38px"><a href="/forecast/forecast.html">Forecast</a> &middot; <a href="/radar/radar.html">Radar</a> &middot; <a href="/waze/waze.html">Waze</a> &middot; <a href="/news/news.html">News</a> &middot;  <a href="/stock/stock.html">Stock</a></span>
+            <span style="font-size: 38px"><a href="./forecast/forecast.html">Forecast</a> &middot; <a href="./radar/radar.html">Radar</a> &middot; <a href="./waze/waze.html">Waze</a> &middot; <a href="./news/news.html">News</a> &middot;  <a href="./stock/stock.html">Stock</a></span>
         </center>      
-        <clock><a href="/clock/clock.html" target="main"><img src="/clockbtn.png" /></a></clock>  
+        <logo><a href="./clock/clock.html" target="main"><img src="teslalogo.png" /></a></clock>  
     </body>
 </html>

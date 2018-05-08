@@ -89,9 +89,10 @@
         <script type="text/javascript">           
             window.onload = function () {
 
-                var url = 'https://newsapi.org/v2/top-headlines?' +
-                          'country=us&' +
-                          'apiKey=88ba6643d4694c458d1834a5d5308ece';
+                var url = ('https:' == document.location.protocol ? 'https://' : 'http://') +
+                           'newsapi.org/v2/top-headlines?' +
+                           'country=us&' +
+                           'apiKey=88ba6643d4694c458d1834a5d5308ece';
 
                 jQuery(document).ready(function($) {
                     $.ajax({

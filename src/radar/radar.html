@@ -21,7 +21,7 @@
         <title>qTesla Radar</title>
 		<link rel="icon" 
 		      type="image/png" 
-		      href="/favicon.png">
+		      href="../favicon.png">
         <style type="text/css">
             a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
             a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
@@ -73,7 +73,7 @@
                 background-repeat:no-repeat;
                 background-attachment:fixed;
                 background-position:center;    
-                background-image:url('/spinner.gif');  
+                background-image:url('../spinner.gif');  
             }
         </style>
         
@@ -84,7 +84,7 @@
         (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
         </script>
 
-        <script type="text/javascript" src="/geolocator.min.js"></script>
+        <script type="text/javascript" src="../geolocator.min.js"></script>
         <script type="text/javascript">
 
             geolocator.config({
@@ -112,8 +112,8 @@
             }
 
             function onGeoError(message) {
-                alert(xhr.status + " " + textStatus + " " + thrownError);
-                document.body.style.backgroundImage="none"          
+                document.body.style.backgroundImage="none";
+                alert(message);
                 document.getElementById('radar').style.backgroundImage="none";
                 document.getElementById('spinner').style.backgroundImage="none"
             }
@@ -136,12 +136,12 @@
     </head>
 
     <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><span style="font-size: 28px"><a href="/">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="/help/help.html">Help</a></span></donate>
+        <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+        <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
         <center>
             <br>
             <br>
-            <span style="font-size: 38px"><a href="/forecast/forecast.html">Forecast</a> &middot; <a href="/radar/radar.html" class="red">Radar</a> &middot; <a href="/waze/waze.html">Waze</a> &middot; <a href="/news/news.html">News</a> &middot; <a href="/stock/stock.html">Stock</a></span>
+            <span style="font-size: 38px"><a href="../forecast/forecast.html">Forecast</a> &middot; <a href="../radar/radar.html" class="red">Radar</a> &middot; <a href="../waze/waze.html">Waze</a> &middot; <a href="../news/news.html">News</a> &middot; <a href="../stock/stock.html">Stock</a></span>
         </center>
         <br>     
         <center>
