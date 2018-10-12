@@ -1,7 +1,7 @@
-<!-- 
+<!--
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2018 TachyonDev, LLC. All rights reserved.
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,118 +16,93 @@
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>qTesla</title>
-		<link rel="icon" 
-		      type="image/png" 
-		      href="../favicon.png">
-        <style type="text/css">
-            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
-            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
-            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
-            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
-            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
-            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
-            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
-            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
-            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
-            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
-            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
-            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
-            a img {border: none;}   
-            input:focus, textarea:focus, *:focus {outline: none;}
-            body
-            {              
-                color:#FFFFFF;
-                background-color:#000000;
-                background-image:url('../spinner.gif');
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;      
-                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
-            }
-            home
-            {
-                position:fixed;
-                top:20px;
-                left:20px;
-            }
-            donate
-            {
-                position:fixed;
-                top:20px;
-                right:20px;
-            }
-            #clock {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                margin-top: -125px;
-                margin-left: -150px;
-            }
-        </style>
-        
-        <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-49492188-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
-        </script>
+<html><head>
+  <title>qTesla</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" type="text/css" href="../qtesla.css">
+  <style type="text/css">
+    #clock {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -125px;
+      margin-left: -150px;
+    }
+  </style>
 
-        <script src="../jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="../geolocator.min.js"></script>
-        <script type="text/javascript">
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49492188-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 
-            geolocator.config({
-                language: "en",
-                google: {
-                    version: "3",
-                    key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
-                }
-            });
+  <script src="../jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../geolocator.min.js"></script>
+  <script type="text/javascript">
+    geolocator.config({
+      language: "en",
+      google: {
+        version: "3",
+        key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+      }
+    });
 
-            function onGeoSuccess(location) {
-                console.log(location);
-                var offset = (location.timezone.dstOffset + location.timezone.rawOffset) / 3600;
-                console.log(offset);
-                document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + offset + '"></canvas>';
-                CoolClock.findAndCreateClocks();
-                document.body.style.backgroundImage="none"
-            }
+    function onGeoSuccess(location) {
+      console.log(location);
+      var offset = (location.timezone.dstOffset + location.timezone.rawOffset) / 3600;
+      console.log(offset);
+      document.getElementById('clock').innerHTML = '<canvas id="c1" class="CoolClock:chunkySwissOnBlack:150:seconds:' + offset + '"></canvas>';
+      CoolClock.findAndCreateClocks();
+      document.body.style.backgroundImage = "none"
+    }
 
-            function onGeoError(message) {       
-                document.body.style.backgroundImage="none";
-                alert(message);
-            }
+    function onGeoError(message) {
+      document.body.style.backgroundImage = "none";
+      alert(message);
+    }
 
-            window.onload = function () {
-                var options = {
-                    enableHighAccuracy: false,
-                    timeout: 3000,
-                    maximumWait: 3000,     // max wait time for desired accuracy
-                    maximumAge: 0,          // disable cache
-                    fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
-                    timezone: true
-                };
-                
-                geolocator.locate(options, function (err, location) {
-                    if (err) return onGeoError(err);
-                    onGeoSuccess(location)
-                });
-            }
-        </script>
-        <script src="coolclock.js" type="text/javascript"></script>
-    </head>
+    window.onload = function() {
+      var options = {
+        enableHighAccuracy: false,
+        timeout: 3000,
+        maximumWait: 3000, // max wait time for desired accuracy
+        maximumAge: 0, // disable cache
+        fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
+        timezone: true
+      };
 
-    <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><span style="font-size: 28px"><a href="../" class="red">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="/help/help.html">Help</a></span></donate>
-        <center>
-            <br>
-            <br>
-            <span style="font-size: 38px"><a href="../forecast/forecast.html">Forecast</a> &middot; <a href="../radar/radar.html">Radar</a> &middot; <a href="../waze/waze.html">Waze</a> &middot; <a href="../news/news.html">News</a> &middot;  <a href="../stock/stock.html">Stock</a></span>
-        </center>
-        <div id="clock" />
-    </body>
+      geolocator.locate(options, function(err, location) {
+        if (err) return onGeoError(err);
+        onGeoSuccess(location)
+      });
+    }
+  </script>
+  <script src="coolclock.js" type="text/javascript"></script>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden">
+  <home><span style="font-size: 28px"><a href="../" class="red">qTesla</a></span></home>
+  <donate><span style="font-size: 24px"><a href="/help/help.html">Help</a></span></donate>
+  <center>
+    <br>
+    <br>
+    <span>
+      <button class="current_button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+      <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
+      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+    </span>
+  </center>
+  <div id="clock" />
+</body>
+
 </html>

@@ -1,7 +1,7 @@
-<!-- 
+<!--
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2016 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2018 TachyonDev, LLC. All rights reserved.
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,132 +21,139 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>qTesla news</title>
-		<link rel="icon" 
-		      type="image/png" 
-		      href="../favicon.png">
-        <style type="text/css">
-            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
-            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
-            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
-            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
-            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
-            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
-            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
-            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
-            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
-            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
-            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
-            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
-            a img {border: none;}   
-            input:focus, textarea:focus, *:focus {outline: none;}
-            body
-            {              
-                color:#FFFFFF;
-                background-color:#000000;  
-                background-image:url('../spinner.gif');
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;      
-                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
-            }
-            table, th, td {
-               border: 0px;
-            }
-            home
-            {
-                position:fixed;
-                top:20px;
-                left:20px;
-            }
-            donate
-            {
-                position:fixed;
-                top:20px;
-                right:20px;
-            }
-            div#news {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-            }
-            div#news > iframe {
-                display: block;
-                width: 100%;
-                height: 100%;
-                border: none;
-            }
-        </style>
-        
-        <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-49492188-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
-        </script>
-        <script src="../jquery-3.2.1.min.js"></script>
-        <script type="text/javascript">           
-            window.onload = function () {
 
-                var url = ('https:' == document.location.protocol ? 'https://' : 'http://') +
-                           'newsapi.org/v2/top-headlines?' +
-                           'country=us&' +
-                           'apiKey=88ba6643d4694c458d1834a5d5308ece';
+<head>
+  <title>qTesla news</title>
+  
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
-                jQuery(document).ready(function($) {
-                    $.ajax({
-                        url : url,
-                        dataType : "json",
-                        success : function(json) {
-                            var articles = '<table style="width:95%" cellpadding="5">';   
-                            var imageUrl;                                                      
-                            $.each(json.articles, function(i, item) {
+  <style type="text/css">
+    div#news {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
 
-                                if (item.urlToImage) {
-                                    imageUrl = item.urlToImage;
-                                }  else {
-                                    imageUrl = "newsicon.png"
-                                }
+    div#news>iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 
-                                articles += '<tr>'
-                                    + '<td align="center"><img src="' + imageUrl + '" height=96></td>'
-                                    + '<td><font size="5"><a href="' + item.url + '">' + item.title + '</a></font><br />';
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49492188-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script src="../jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      loadNews(null, 'tesla');
+        document.getElementById("btn_news_tesla").className="current_sub_button"
+    }
 
-                                if (item.description) { 
-                                    articles += '<font size="3">' + item.description + '</font><br />' 
-                                }
+    function loadNews(category, query) {
 
-                                articles += '<font size="2">' + item.source.name + ' - ' + item.publishedAt + '</font></td>' 
-                                    + '</tr>';
-                            });
-                            articles += '</table>';
+      document.getElementById("btn_news_tesla").className="sub_button"
+      document.getElementById("btn_news_spacex").className="sub_button"
+      document.getElementById("btn_news_technology").className="sub_button"
+      document.getElementById("btn_news_science").className="sub_button"
+      document.getElementById("btn_news_general").className="sub_button"
 
-                            document.getElementById('news').innerHTML = articles;
+      var url = ('https:' == document.location.protocol ? 'https://' : 'http://') +
+        'newsapi.org/v2/top-headlines' +
+        '?apiKey=88ba6643d4694c458d1834a5d5308ece';
 
-                            document.body.style.backgroundImage="none"
-                        },
-                        error: function (xhr, textStatus, thrownError) {
-                            document.body.style.backgroundImage="none"
-                            alert(xhr.status + " " + textStatus + " " + thrownError);
-                        }   
-                    });
-                });
-            }
-        </script>
-    </head>
+      if (category) {
+        url = url + '&country=us' + '&category=' + category
+      } else if (query) {
+        url = url + '&q=' + query;
+      } else {
+        url = url + '&country=us' + '&category=general'
+      }
 
-    <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
-        <center>
-            <br>
-            <br>
-            <span style="font-size: 38px"><a href="../forecast/forecast.html">Forecast</a> &middot; <a href="../radar/radar.html">Radar</a> &middot; <a href="../waze/waze.html">Waze</a> &middot; <a href="../news/news.html" class="red">News</a> &middot; <a href="../stock/stock.html">Stock</a></span>
-        <br>
-        <br>
-        <div id="news">
-        </div>
-        </center>
-    </body>
+      jQuery(document).ready(function($) {
+        $.ajax({
+          url: url,
+          dataType: "json",
+          success: function(json) {
+            var articles = '<table style="width:95%" cellpadding="5">';
+            var imageUrl;
+            $.each(json.articles, function(i, item) {
+
+              if (item.urlToImage) {
+                imageUrl = item.urlToImage;
+              } else {
+                imageUrl = "newsicon.png"
+              }
+
+              articles += '<tr>' +
+                '<td align="center"><img src="' + imageUrl + '" height=96></td>' +
+                '<td><font size="5"><a href="' + item.url + '">' + item.title + '</a></font><br />';
+
+              if (item.description) {
+                articles += '<font size="3">' + item.description + '</font><br />'
+              }
+
+              articles += '<font size="2">' + item.source.name + ' - ' + item.publishedAt + '</font></td>' +
+                '</tr>';
+            });
+            articles += '</table>';
+
+            document.getElementById('news').innerHTML = articles;
+
+            document.body.style.backgroundImage = "none"
+          },
+          error: function(xhr, textStatus, thrownError) {
+            document.body.style.backgroundImage = "none"
+            alert(xhr.status + " " + textStatus + " " + thrownError);
+          }
+        });
+      });
+    }
+
+    document.getElementById("")
+  </script>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden">
+  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+  <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
+  <center>
+    <br>
+    <br>
+    <span>
+      <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+      <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+      <button class="current_button" onclick="window.location.href='../news/news.html'">News</button>
+      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+    </span>
+    <br>
+    <br>
+    <span>
+      <button id="btn_news_tesla" class="sub_button" onclick="loadNews(null, 'Tesla'); this.className='current_sub_button'">Tesla</button>
+      <button id="btn_news_spacex" class="sub_button" onclick="loadNews(null, 'SpaceX'); this.className='current_sub_button'">SpaceX</button>
+      <button id="btn_news_technology" class="sub_button" onclick="loadNews('technology', null); this.className='current_sub_button'">Tech</button>
+      <button id="btn_news_science" class="sub_button" onclick="loadNews('science', null); this.className='current_sub_button'">Science</button>
+      <button id="btn_news_general" class="sub_button" onclick="loadNews(null, null); this.className='current_sub_button'">General</button>
+    </span>
+    <br>
+    <br>
+    <div id="news">
+    </div>
+  </center>
+</body>
+
 </html>

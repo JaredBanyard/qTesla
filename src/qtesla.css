@@ -1,0 +1,168 @@
+a:link {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* unvisited link */
+a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* visited link */
+a:hover {
+  color: #7F7F7F;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:active {
+  color: #7F7F7F;
+  text-decoration: none;
+}
+
+/* selected link */
+a.green:link {
+  color: #5FFF5F;
+  text-decoration: none;
+}
+
+/* unvisited link */
+a.green:visited {
+  color: #5FFF5F;
+  text-decoration: none;
+}
+
+/* visited link */
+a.green:hover {
+  color: #7FFF7F;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a.green:active {
+  color: #7FFF7F;
+  text-decoration: none;
+}
+
+/* selected link */
+a.red:link {
+  color: #FF3F3F;
+  text-decoration: none;
+}
+
+/* unvisited link */
+a.red:visited {
+  color: #FF3F3F;
+  text-decoration: none;
+}
+
+/* visited link */
+a.red:hover {
+  color: #FF5F5F;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a.red:active {
+  color: #FF5F5F;
+  text-decoration: none;
+}
+
+/* selected link */
+a img {
+  border: none;
+}
+
+.button, .current_button {
+  margin-left: 4px;
+  margin-right: 4px;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 8px 8px;
+  text-align: center;
+  font-size: 24px;
+  cursor: pointer;
+  width: 128px;
+}
+
+.button {
+  background-color: black;
+  color: white;
+}
+
+.current_button {
+  background-color: white;
+  color: black;
+}
+
+.button:hover {
+  background-color: white;
+  color: black;
+}
+
+.current_button:hover {
+  background-color: black;
+  color: white;
+}
+
+.sub_button, .current_sub_button {
+  margin-left: 2px;
+  margin-right: 2px;
+  border: 1px solid silver;
+  border-radius: 4px;
+  padding: 8px 8px;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  width: 96px;
+}
+
+.sub_button {
+  background-color: black;
+  color: silver;
+}
+
+.current_sub_button {
+  background-color: silver;
+  color: black;
+}
+
+.sub_button:hover {
+  background-color: silver;
+  color: black;
+}
+
+.current_sub_button:hover {
+  background-color: black;
+  color: silver;
+}
+
+input:focus, textarea:focus, *:focus {
+  outline: none;
+}
+
+body {
+  color: #FFFFFF;
+  background-color: #000000;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
+}
+
+table, th, td {
+  border: 0px;
+}
+
+home {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+donate {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}

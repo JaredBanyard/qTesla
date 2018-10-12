@@ -1,7 +1,7 @@
-<!-- 
+<!--
     This file is part of QuickTesla (http://qTes.la)
 
-    © Copyright 2014 TachyonDev, LLC. All rights reserved. 
+    © Copyright 2014 TachyonDev, LLC. All rights reserved.
 
     QuickTesla is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,136 +17,120 @@
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>qTesla Radar</title>
-		<link rel="icon" 
-		      type="image/png" 
-		      href="../favicon.png">
-        <style type="text/css">
-            a:link {color:#FFFFFF;text-decoration:none;} /* unvisited link */
-            a:visited {color:#FFFFFF;text-decoration:none;}  /* visited link */
-            a:hover {color:#7F7F7F;text-decoration:none;}  /* mouse over link */
-            a:active {color:#7F7F7F;text-decoration:none;}  /* selected link */
-            a.green:link {color:#5FFF5F;text-decoration:none;} /* unvisited link */
-            a.green:visited {color:#5FFF5F;text-decoration:none;}  /* visited link */
-            a.green:hover {color:#7FFF7F;text-decoration:none;}  /* mouse over link */
-            a.green:active {color:#7FFF7F;text-decoration:none;}  /* selected link */
-            a.red:link {color:#FF3F3F;text-decoration:none;} /* unvisited link */
-            a.red:visited {color:#FF3F3F;text-decoration:none;}  /* visited link */
-            a.red:hover {color:#FF5F5F;text-decoration:none;}  /* mouse over link */
-            a.red:active {color:#FF5F5F;text-decoration:none;}  /* selected link */
-            a img {border: none;}   
-            input:focus, textarea:focus, *:focus {outline: none;}
-            body
-            {              
-                color:#FFFFFF;
-                background-color:#000000;
-                font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
-            }
-            home
-            {
-                position:fixed;
-                top:20px;
-                left:20px;
-            }
-            donate
-            {
-                position:fixed;
-                top:20px;
-                right:20px;
-            }
-            div#radar {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                color:#FFFFFF;
-                background-color:#000000;
-                background-repeat:no-repeat;
-                background-position:center;  
-                background-size:cover;
-            }
-            div#spinner {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                color:#FFFFFF;
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-                background-position:center;    
-                background-image:url('../spinner.gif');  
-            }
-        </style>
-        
-        <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-49492188-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
-        </script>
 
-        <script type="text/javascript" src="../geolocator.min.js"></script>
-        <script type="text/javascript">
+<head>
+  <title>qTesla Radar</title>
 
-            geolocator.config({
-                language: "en",
-                google: {
-                    version: "3",
-                    key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
-                }
-            });
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
-            function onGeoSuccess(location) {
-                console.log(location);      
-                var lat = location.coords.latitude;
-                var long = location.coords.longitude;
-                var strApi = 'https://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' + 
-                    '&centerlat=' + lat +
-                    '&centerlon=' + long + 
-                    '&width=800&height=1000&radius=120&newmaps=1&num=12&delay=25&noclutter=1';
-                var radarImage = new Image();           
-                radarImage.onload = function() {
-                    document.getElementById('radar').style.backgroundImage = 'url(' + radarImage.src + ')';
-                    document.getElementById('spinner').style.backgroundImage="none";
-                };
-                radarImage.src = strApi;
-            }
+  <style type="text/css">
+    div#radar {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      color: #FFFFFF;
+      background-color: #000000;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
 
-            function onGeoError(message) {
-                document.body.style.backgroundImage="none";
-                alert(message);
-                document.getElementById('radar').style.backgroundImage="none";
-                document.getElementById('spinner').style.backgroundImage="none"
-            }
+    div#spinner {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      color: #FFFFFF;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      background-image: url('../spinner.gif');
+    }
+  </style>
 
-            window.onload = function () {
-                var options = {
-                    enableHighAccuracy: false,
-                    timeout: 3000,
-                    maximumWait: 3000,     // max wait time for desired accuracy
-                    maximumAge: 0,          // disable cache
-                    fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
-                    addressLookup: true    // requires Google API key if true
-                };
-                geolocator.locate(options, function (err, location) {
-                    if (err) return onGeoError(err);
-                    onGeoSuccess(location)
-                });
-            }
-        </script>
-    </head>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49492188-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 
-    <body style="margin:0px;padding:0px;overflow:hidden">
-        <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-        <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
-        <center>
-            <br>
-            <br>
-            <span style="font-size: 38px"><a href="../forecast/forecast.html">Forecast</a> &middot; <a href="../radar/radar.html" class="red">Radar</a> &middot; <a href="../waze/waze.html">Waze</a> &middot; <a href="../news/news.html">News</a> &middot; <a href="../stock/stock.html">Stock</a></span>
-        </center>
-        <br>     
-        <center>
-            <div id="radar"/>
-            <div id="spinner"/>
-        </center>  
-    </body>
+  <script type="text/javascript" src="../geolocator.min.js"></script>
+  <script type="text/javascript">
+    geolocator.config({
+      language: "en",
+      google: {
+        version: "3",
+        key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+      }
+    });
+
+    function onGeoSuccess(location) {
+      console.log(location);
+      var lat = location.coords.latitude;
+      var long = location.coords.longitude;
+      var strApi = 'https://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' +
+        '&centerlat=' + lat +
+        '&centerlon=' + long +
+        '&width=800&height=1000&radius=120&newmaps=1&num=12&delay=25&noclutter=1';
+      var radarImage = new Image();
+      radarImage.onload = function() {
+        document.getElementById('radar').style.backgroundImage = 'url(' + radarImage.src + ')';
+        document.getElementById('spinner').style.backgroundImage = "none";
+      };
+      radarImage.src = strApi;
+    }
+
+    function onGeoError(message) {
+      document.body.style.backgroundImage = "none";
+      alert(message);
+      document.getElementById('radar').style.backgroundImage = "none";
+      document.getElementById('spinner').style.backgroundImage = "none";
+    }
+
+    window.onload = function() {
+      var options = {
+        enableHighAccuracy: false,
+        timeout: 3000,
+        maximumWait: 3000, // max wait time for desired accuracy
+        maximumAge: 0, // disable cache
+        fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
+        addressLookup: true // requires Google API key if true
+      };
+      geolocator.locate(options, function(err, location) {
+        if (err) return onGeoError(err);
+        onGeoSuccess(location)
+      });
+    }
+  </script>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden">
+  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+  <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
+  <center>
+    <br>
+    <br>
+    <span>
+      <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+      <button class="current_button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
+      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+    </span>
+  </center>
+  <br>
+  <center>
+    <div id="radar" />
+    <div id="spinner" />
+  </center>
+</body>
+
 </html>
