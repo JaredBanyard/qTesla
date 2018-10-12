@@ -20,7 +20,7 @@
 
 <head>
   <title>qTesla Forecast</title>
-  
+
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
@@ -109,6 +109,7 @@
     }
 
     window.onload = function() {
+        document.body.style.backgroundImage = "../spinner.gif";
       var options = {
         enableHighAccuracy: false,
         timeout: 3000,

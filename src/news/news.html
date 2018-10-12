@@ -24,7 +24,7 @@
 
 <head>
   <title>qTesla news</title>
-  
+
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
@@ -71,17 +71,21 @@
       document.getElementById("btn_news_science").className="sub_button"
       document.getElementById("btn_news_general").className="sub_button"
 
-      var url = ('https:' == document.location.protocol ? 'https://' : 'http://') +
-        'newsapi.org/v2/top-headlines' +
-        '?apiKey=88ba6643d4694c458d1834a5d5308ece';
+      var url = ('https:' == document.location.protocol ? 'https://' : 'http://');
+        // 'newsapi.org/v2/top-headlines' +
+        // '?apiKey=88ba6643d4694c458d1834a5d5308ece';
+
+// &sortBy=publishedAt
 
       if (category) {
-        url = url + '&country=us' + '&category=' + category
+        url = url + 'newsapi.org/v2/top-headlines?country=us&category=' + category
       } else if (query) {
-        url = url + '&q=' + query;
+        url = url + 'newsapi.org/v2/everything?language=en&sortBy=publishedAt&q=' + query;
       } else {
-        url = url + '&country=us' + '&category=general'
+        url = url + 'newsapi.org/v2/top-headlines?country=us&category=general'
       }
+
+      url = url + '&apiKey=88ba6643d4694c458d1834a5d5308ece';
 
       jQuery(document).ready(function($) {
         $.ajax({
