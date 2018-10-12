@@ -75,15 +75,18 @@ a img {
 }
 
 .button, .current_button {
-  margin-left: 4px;
-  margin-right: 4px;
+  margin-top: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-bottom: 10px;
   border: 1px solid white;
   border-radius: 4px;
   padding: 8px 8px;
   text-align: center;
   font-size: 24px;
+  font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
   cursor: pointer;
-  width: 128px;
+  width: 120px;
 }
 
 .button {
@@ -109,11 +112,13 @@ a img {
 .sub_button, .current_sub_button {
   margin-left: 2px;
   margin-right: 2px;
+  margin-bottom: 10px;
   border: 1px solid silver;
   border-radius: 4px;
   padding: 8px 8px;
   text-align: center;
   font-size: 18px;
+  font-family: 'Gotham Book', Gotham-Book, Arial, sans-serif;
   cursor: pointer;
   width: 96px;
 }
@@ -157,12 +162,12 @@ table, th, td {
 
 home {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 10px;
+  left: 10px;
 }
 
 donate {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
 }
