@@ -25,16 +25,6 @@
   <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
   <style type="text/css">
-    div#radar {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      color: #FFFFFF;
-      background-color: #000000;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
 
     div#spinner {
       position: fixed;
@@ -46,7 +36,16 @@
       background-position: center;
       background-image: url('../spinner.gif');
     }
+
+    #map {
+      height: 125px;
+      display: none;
+    }
+
   </style>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc&callback=getLatLong">
+  </script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -62,52 +61,106 @@
     })();
   </script>
 
-  <script type="text/javascript" src="../geolocator.min.js"></script>
   <script type="text/javascript">
-    geolocator.config({
-      language: "en",
-      google: {
-        version: "3",
-        key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
-      }
-    });
 
-    function onGeoSuccess(location) {
-      console.log(location);
+    function getTimes(cb) {
+      var xmlhttp = new XMLHttpRequest();
+      //https://www.rainviewer.com/api.html
+      var url = "https://tilecache.rainviewer.com/api/maps.json";
+
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var myArr = JSON.parse(this.responseText);
+          cb(myArr);
+        }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+
+
+    var TILE_SIZE = 256;
+
+    function getLatLong() {
+      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+    }
+
+    function project(latLng) {
+      var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+      // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+      // about a third of a tile past the edge of the world tile.
+      siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+      return new google.maps.Point(
+        TILE_SIZE * (0.5 + latLng.lng() / 360),
+        TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+    }
+
+    function  onGeoSuccess(location) {
+      document.getElementById('map').style.height = document.documentElement.clientHeight - 65 + "px";
       var lat = location.coords.latitude;
       var long = location.coords.longitude;
-      var strApi = 'https://api.wunderground.com/api/782096d3ad25cd76/animatedradar/image.gif?' +
-        '&centerlat=' + lat +
-        '&centerlon=' + long +
-        '&width=800&height=1000&radius=120&newmaps=1&num=12&delay=25&noclutter=1';
-      var radarImage = new Image();
-      radarImage.onload = function() {
-        document.getElementById('radar').style.backgroundImage = 'url(' + radarImage.src + ')';
+      var center = new google.maps.LatLng(lat, long);
+      var zoom = 8;
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: center,
+        zoom: zoom,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: false
+      });
+
+      var scale = 1 << zoom;
+      var worldCoordinate = project(center);
+
+      var tileCoordinate = new google.maps.Point(
+        Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+        Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+      var images = [];
+
+      getTimes((times) => {
+        var imageStart = times.length - 5;
+
+        for (var i=imageStart; i<times.length; i++) {
+          images.push(getImage(times[i]));
+        }
         document.getElementById('spinner').style.backgroundImage = "none";
-      };
-      radarImage.src = strApi;
+        document.getElementById('map').style.display = "block";
+        loopImages(map, images);
+      });
+    }
+    function getImage (time) {
+      return imageMapType = new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+          return ['https://tilecache.rainviewer.com/v2/radar/',time,'/',TILE_SIZE,'/',
+            zoom, '/', coord.x, '/', coord.y, '/4/1_1.png'].join('');
+        },
+        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE),
+        opacity: .5
+      });
+    }
+    function loopImages(map, layers) {
+      map.overlayMapTypes.push(null);
+      var i = 0;
+      window.setInterval(() => {
+        if(map.overlayMapTypes.getLength() > 0)
+          map.overlayMapTypes.clear();
+        map.overlayMapTypes.setAt("0",layers[i]);
+        console.log(i);
+        i++
+
+        if (i == layers.length) {
+          i = 0;
+        }
+      },1000);
+
     }
 
     function onGeoError(message) {
       document.body.style.backgroundImage = "none";
-      alert(message);
-      document.getElementById('radar').style.backgroundImage = "none";
+      alert("There was an error getting your location, please try again");
       document.getElementById('spinner').style.backgroundImage = "none";
-    }
-
-    window.onload = function() {
-      var options = {
-        enableHighAccuracy: false,
-        timeout: 3000,
-        maximumWait: 3000, // max wait time for desired accuracy
-        maximumAge: 0, // disable cache
-        fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
-        addressLookup: true // requires Google API key if true
-      };
-      geolocator.locate(options, function(err, location) {
-        if (err) return onGeoError(err);
-        onGeoSuccess(location)
-      });
     }
   </script>
 </head>
@@ -116,7 +169,7 @@
   <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
   <donate><span style="font-size: 24px"><a href="../help/help.html">Help</a></span></donate>
   <center>
-    <span>
+    <span ->
       <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
       <button class="current_button" onclick="window.location.href='../radar/radar.html'">Radar</button>
       <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
@@ -125,7 +178,7 @@
     </span>
   </center>
   <center>
-    <div id="radar" />
+    <div id="map"></div>
     <div id="spinner" />
   </center>
 </body>
