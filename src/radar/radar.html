@@ -162,17 +162,6 @@
       alert("There was an error getting your location, please try again");
       document.getElementById('spinner').style.backgroundImage = "none";
     }
-
-    window.onload = function() {
-      var options = {
-        enableHighAccuracy: false,
-        timeout: 3000,
-        maximumWait: 3000, // max wait time for desired accuracy
-        maximumAge: 0, // disable cache
-        fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
-        addressLookup: true // requires Google API key if true
-      };
-    }
   </script>
 </head>
 
