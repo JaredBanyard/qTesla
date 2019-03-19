@@ -80,7 +80,6 @@
 
 
     var TILE_SIZE = 256;
-    var TIME = 0;
 
     function getLatLong() {
       navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
@@ -121,31 +120,36 @@
       var images = [];
       getTimes((times) => {
         for (var i=0; i<times.length; i++) {
-          TIME = times[i];
-          var imageMapType = new google.maps.ImageMapType({
-            getTileUrl: function(coord, zoom) {
-              return ['https://tilecache.rainviewer.com/v2/radar/',TIME,'/512/',
-                zoom, '/', coord.x, '/', coord.y, '/4/1_1.png'].join('');
-            },
-            tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE)
-          });
-          images.push(imageMapType);
+
+          images.push(getImage(times[i]));
         }
         document.getElementById('spinner').style.backgroundImage = "none";
         document.getElementById('map').style.display = "block";
         loopImages(map, images);
       });
     }
-
+    function getImage (time) {
+      return imageMapType = new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+          return ['https://tilecache.rainviewer.com/v2/radar/',time,'/512/',
+            zoom, '/', coord.x, '/', coord.y, '/4/1_1.png'].join('');
+        },
+        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE)
+      });
+    }
     function loopImages(map, layers) {
       map.overlayMapTypes.push(null);
-      var count = 0;
+      var i = 0;
       window.setInterval(() => {
         if(map.overlayMapTypes.getLength() > 0)
           map.overlayMapTypes.clear();
+        map.overlayMapTypes.setAt("0",layers[i]);
+        i++
 
-        map.overlayMapTypes.setAt("0",layers[count]);
-        count = (count + 1) % layers.length;
+        if (i == layers.length) {
+          i = 0;
+        }
+        console.log(i,layers.length);
       },800);
 
     }
