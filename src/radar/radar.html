@@ -120,7 +120,7 @@
       var images = [];
 
       getTimes((times) => {
-        var imageStart = times.length - 4;
+        var imageStart = times.length - 5;
 
         for (var i=imageStart; i<times.length; i++) {
           images.push(getImage(times[i]));
@@ -136,7 +136,8 @@
           return ['https://tilecache.rainviewer.com/v2/radar/',time,'/',TILE_SIZE,'/',
             zoom, '/', coord.x, '/', coord.y, '/4/1_1.png'].join('');
         },
-        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE)
+        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE),
+        opacity: .5
       });
     }
     function loopImages(map, layers) {
@@ -146,12 +147,13 @@
         if(map.overlayMapTypes.getLength() > 0)
           map.overlayMapTypes.clear();
         map.overlayMapTypes.setAt("0",layers[i]);
+        console.log(i);
         i++
 
         if (i == layers.length) {
           i = 0;
         }
-      },800);
+      },1000);
 
     }
 
