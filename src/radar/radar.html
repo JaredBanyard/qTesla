@@ -80,6 +80,12 @@
 
 
     var TILE_SIZE = 256;
+    var TIME = 0;
+
+    function getLatLong() {
+      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+    }
+
     function project(latLng) {
       var siny = Math.sin(latLng.lat() * Math.PI / 180);
 
@@ -90,12 +96,6 @@
       return new google.maps.Point(
         TILE_SIZE * (0.5 + latLng.lng() / 360),
         TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
-    }
-
-    var TIME = 0;
-
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     function  onGeoSuccess(location) {
@@ -134,15 +134,10 @@
         document.getElementById('spinner').style.backgroundImage = "none";
         document.getElementById('map').style.display = "block";
         loopImages(map, images);
-
       });
-
-
-
-
-      // map.overlayMapTypes.pop(imageMapType);
     }
-    async function loopImages(map, layers) {
+
+    function loopImages(map, layers) {
       map.overlayMapTypes.push(null);
       var count = 0;
       window.setInterval(() => {
@@ -153,9 +148,6 @@
         count = (count + 1) % layers.length;
       },800);
 
-    }
-    function getLatLong() {
-      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
     }
 
     function onGeoError(message) {
