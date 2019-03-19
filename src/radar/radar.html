@@ -125,7 +125,7 @@
           var imageMapType = new google.maps.ImageMapType({
             getTileUrl: function(coord, zoom) {
               return ['https://tilecache.rainviewer.com/v2/radar/',TIME,'/512/',
-                zoom, '/', coord.x, '/', coord.y, '/1/1_1.png'].join('');
+                zoom, '/', coord.x, '/', coord.y, '/4/1_1.png'].join('');
             },
             tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE)
           });
