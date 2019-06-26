@@ -108,7 +108,8 @@
 
     function onGeoError(message) {
       document.body.style.backgroundImage = "none";
-      alert(message);
+      alert("There was an error getting your location, please try again");
+      document.getElementById('spinner').style.backgroundImage = "none";
     }
 
     window.onload = function() {
