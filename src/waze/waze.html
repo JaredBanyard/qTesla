@@ -25,19 +25,35 @@
   <link rel="stylesheet" type="text/css" href="../qtesla.css">
 
   <style type="text/css">
+
+    header {
+      position: absolute;
+      width: 100%;
+      height: auto;
+      top: 0;
+      left: auto;
+      right: auto;
+      z-index: 1;
+      background: #000000;
+    }
+
     div#waze {
-      position: fixed;
+      position: absolute;
       width: 100%;
       height: 100%;
     }
 
     div#waze>iframe {
+      position: relative;
       display: block;
       width: 100%;
       height: 100%;
       border: none;
     }
   </style>
+
+  <script src="https://browser.sentry-cdn.com/5.4.3/bundle.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">Sentry.init({ dsn: 'https://69e64431691b4e1cb3b4b47067a9c237@sentry.io/1491220' });</script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -52,7 +68,7 @@
       s.parentNode.insertBefore(ga, s);
     })();
   </script>
-  <script src="../jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript">
     $(window).resize(function() {
       document.body.style.backgroundImage = "url('../spinner.gif')";
@@ -62,18 +78,20 @@
   </script>
 </head>
 
-<body style="margin:0px;padding:0px;overflow:hidden">
-  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-  <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
-  <center>
-    <span>
-      <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
-      <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
-      <button class="current_button" onclick="window.location.href='../waze/waze.html'">Waze</button>
-      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
-      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
-    </span>
-  </center>
+<body style="margin:0px;padding:0px;overflow: hidden;">
+  <header>
+    <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+    <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
+    <center>
+      <span>
+        <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+        <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+        <button class="current_button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+        <button class="button" onclick="window.location.href='../news/news.html'">News</button>
+        <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+      </span>
+    </center>
+  </header>
   <div id="waze">
     <iframe id="waze_iframe" src="https://teslawaze.azurewebsites.net" allow="geolocation" frameborder="0" />
   </div>
