@@ -55,21 +55,20 @@
         var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=' + position.coords.latitude +
           '&lon=' + position.coords.longitude +
           '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + "us" + '"></iframe>';
-        document.getElementById('geo-forecast').innerHTML = strForecast;
         document.body.style.backgroundImage = "none"
+        document.getElementById('geo-forecast').innerHTML = strForecast;
       }
     }
 
     function errorPosition(positionError) {
-      document.body.style.backgroundImage = "none";
-      alert("There was an error getting your location, please try again");
-      document.getElementById('spinner').style.backgroundImage = "none";
+      document.body.style.backgroundImage = "none"
+      alert("Error: " + positionError.code + ": " + positionError.message);
     }
 
     window.onload = function() {
       if (navigator.geolocation) {
         document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.watchPosition(showPosition, errorPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
       } else {
         document.body.style.backgroundImage = "none";
         alert("Geolocation is not supported by this browser.");

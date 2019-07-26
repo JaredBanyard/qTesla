@@ -165,11 +165,11 @@
     }
 
     function errorPosition(positionError) {
-      document.body.style.backgroundImage = "none";
-      alert("There was an error getting your location, please try again");
+      document.body.style.backgroundImage = "none"
       document.getElementById('spinner').style.backgroundImage = "none";
+      alert("Error: " + positionError.code + ": " + positionError.message);
     }
-
+    
     window.onload = function() {
       if (navigator.geolocation) {
         document.body.style.backgroundImage = "../spinner.gif";
