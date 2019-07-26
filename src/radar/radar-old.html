@@ -61,8 +61,6 @@
     })();
   </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"></script>
-
   <script type="text/javascript">
 
     function getTimes(cb) {
@@ -80,17 +78,16 @@
       xmlhttp.send();
     }
 
+
     var TILE_SIZE = 256;
 
     function getLatLong() {
-      if (navigator.geolocation) {
-        document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-      } else {
-        document.body.style.backgroundImage = "none";
-        alert("Geolocation is not supported by this browser.");
-      }
+      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
     }
+
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc&callback=getLatLong';
+    document.head.appendChild(script);
 
     function project(latLng) {
       var siny = Math.sin(latLng.lat() * Math.PI / 180);
@@ -104,10 +101,10 @@
         TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
     }
 
-    function  showPosition(position) {
+    function  onGeoSuccess(location) {
       document.getElementById('map').style.height = document.documentElement.clientHeight - 65 + "px";
-      var lat = position.coords.latitude;
-      var long = position.coords.longitude;
+      var lat = location.coords.latitude;
+      var long = location.coords.longitude;
       var center = new google.maps.LatLng(lat, long);
       var zoom = 8;
       var map = new google.maps.Map(document.getElementById('map'), {
@@ -164,20 +161,10 @@
 
     }
 
-    function errorPosition(positionError) {
+    function onGeoError(message) {
       document.body.style.backgroundImage = "none";
       alert("There was an error getting your location, please try again");
       document.getElementById('spinner').style.backgroundImage = "none";
-    }
-
-    window.onload = function() {
-      if (navigator.geolocation) {
-        document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-      } else {
-        document.body.style.backgroundImage = "none";
-        alert("Geolocation is not supported by this browser.");
-      }
     }
   </script>
 </head>
@@ -198,7 +185,6 @@
     <div id="map"></div>
     <div id="spinner" />
   </center>
-        
 </body>
 
 </html>

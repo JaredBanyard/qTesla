@@ -42,38 +42,90 @@
   </script>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.5/geolocator.min.js"></script>
   <script type="text/javascript">
-    function showPosition(position) {
+    geolocator.config({
+      language: "en",
+      google: 
+{        version: "3",
+        key: "AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"
+      }
+    });
 
+    function onGeoSuccess(location) {
+      var unitCode;
+      if (location.address.countryCode == "US") {
+        unitCode = "us";
+      } else if (location.address.countryCode == "GB") {
+        unitCode = "uk";
+      } else {
+        unitCode = "ca";
+      }
       getForecast();
-
       var loop = setInterval(function() {
         getForecast()
       }, 120000);
 
       function getForecast() {
-        var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=' + position.coords.latitude +
-          '&lon=' + position.coords.longitude +
-          '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + "us" + '"></iframe>';
+        var strForecast = '<iframe id="forecast_embed" style="background:#000000;" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=' + location.coords.latitude +
+          '&lon=' + location.coords.longitude +
+          '&name=' + location.address.city + '&color=#FFFFFF&text-color=#FFFFFF&font=Arial&units=' + unitCode + '"></iframe>';
+        console.log(strForecast);
         document.getElementById('geo-forecast').innerHTML = strForecast;
         document.body.style.backgroundImage = "none"
       }
+      if (location.address.countryCode == "US") {
+        jQuery(document).ready(function($) {
+          $.ajax({
+            url: 'https://api.forecast.io/forecast/4a71ece462e94548186cf04c809ec550/' + location.coords.latitude + ',' + location.coords.longitude,
+            dataType: "jsonp",
+            success: function(parsed_json) {
+              console.log(parsed_json);
+              var strAlerts;
+              if (parsed_json.hasOwnProperty('alerts')) {
+                $.each(parsed_json.alerts, function(i, item) {
+                  console.log(item);
+                  var date = new Date(0);
+                  date.setUTCSeconds(item.time);
+                  var fromStr = date.toString();
+                  date.setUTCSeconds(item.expires);
+                  var untilStr = date.toString();
+                  strAlerts = '<font size="5" color="red">' + item.title + '</font><br />' +
+                    '<font size="4">From ' + fromStr + '</font><br />' +
+                    '<font size="4">Until ' + untilStr + '</font><br /><br />' +
+                    item.description + '<br /><br />';
+                });
+                if (strAlerts != null) {
+                  document.getElementById('geo-alerts').innerHTML = strAlerts;
+                }
+              }
+            }
+          });
+        });
+      }
+
     }
 
-    function errorPosition(positionError) {
+    function onGeoError(message) {
       document.body.style.backgroundImage = "none";
       alert("There was an error getting your location, please try again");
       document.getElementById('spinner').style.backgroundImage = "none";
     }
 
     window.onload = function() {
-      if (navigator.geolocation) {
         document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.watchPosition(showPosition, errorPosition);
-      } else {
-        document.body.style.backgroundImage = "none";
-        alert("Geolocation is not supported by this browser.");
-      }
+      var options = {
+        enableHighAccuracy: false,
+        timeout: 3000,
+        maximumWait: 3000, // max wait time for desired accuracy
+        maximumAge: 0, // disable cache
+        fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
+        addressLookup: true // requires Google API key if true
+      };
+      geolocator.locate(options, function(err, location) {
+        if (err) return onGeoError(err);
+        onGeoSuccess(location);
+      });
     }
   </script>
 </head>
