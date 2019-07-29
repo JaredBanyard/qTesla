@@ -62,6 +62,24 @@
   </script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrlqQwbBUktKqP2sbFK5QOl-POIpEvDDc"></script>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden">
+  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+  <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
+  <center>
+    <span ->
+      <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+      <button class="current_button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
+      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+    </span>
+  </center>
+  <center>
+    <div id="map"></div>
+    <div id="spinner" />
+  </center>        
 
   <script type="text/javascript">
 
@@ -137,6 +155,7 @@
         loopImages(map, images);
       });
     }
+
     function getImage (time) {
       return imageMapType = new google.maps.ImageMapType({
         getTileUrl: function(coord, zoom) {
@@ -147,6 +166,7 @@
         opacity: .5
       });
     }
+
     function loopImages(map, layers) {
       map.overlayMapTypes.push(null);
       var i = 0;
@@ -170,35 +190,13 @@
       alert("Error: " + positionError.code + ": " + positionError.message);
     }
     
-    window.onload = function() {
-      if (navigator.geolocation) {
-        document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-      } else {
-        document.body.style.backgroundImage = "none";
-        alert("Geolocation is not supported by this browser.");
-      }
+    if (navigator.geolocation) {
+      document.body.style.backgroundImage = "../spinner.gif";
+      navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
+    } else {
+      document.body.style.backgroundImage = "none";
+      alert("Geolocation is not supported by this browser.");
     }
   </script>
-</head>
-
-<body style="margin:0px;padding:0px;overflow:hidden">
-  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-  <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
-  <center>
-    <span ->
-      <button class="button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
-      <button class="current_button" onclick="window.location.href='../radar/radar.html'">Radar</button>
-      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
-      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
-      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
-    </span>
-  </center>
-  <center>
-    <div id="map"></div>
-    <div id="spinner" />
-  </center>
-        
 </body>
-
 </html>

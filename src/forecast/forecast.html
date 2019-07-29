@@ -42,7 +42,30 @@
   </script>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body style="margin:0px;padding:0px;overflow:hidden">
+  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
+  <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
+  <center>
+    <span>
+      <button class="current_button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
+      <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
+      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
+      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
+      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
+    </span>
+  </center>
+  <br>
+  <br>
+  <center>
+    <div id="geo-forecast"></div>
+    <br>
+    <div id="geo-alerts" style="width:960px;text-align:left;"></div>
+  </center>
+
   <script type="text/javascript">
+
     function showPosition(position) {
 
       getForecast();
@@ -65,37 +88,14 @@
       alert("Error: " + positionError.code + ": " + positionError.message);
     }
 
-    window.onload = function() {
-      if (navigator.geolocation) {
-        document.body.style.backgroundImage = "../spinner.gif";
-        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-      } else {
-        document.body.style.backgroundImage = "none";
-        alert("Geolocation is not supported by this browser.");
-      }
+    if (navigator.geolocation) {
+      document.body.style.backgroundImage = "../spinner.gif";
+      navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
+    } else {
+      document.body.style.backgroundImage = "none";
+      alert("Geolocation is not supported by this browser.");
     }
+    
   </script>
-</head>
-
-<body style="margin:0px;padding:0px;overflow:hidden">
-  <home><span style="font-size: 28px"><a href="../">qTesla</a></span></home>
-  <referral><span style="font-size: 24px"><a href="../help/help.html">Free Supercharging</a></span></referral>
-  <center>
-    <span>
-      <button class="current_button" onclick="window.location.href='../forecast/forecast.html'">Forecast</button>
-      <button class="button" onclick="window.location.href='../radar/radar.html'">Radar</button>
-      <button class="button" onclick="window.location.href='../waze/waze.html'">Waze</button>
-      <button class="button" onclick="window.location.href='../news/news.html'">News</button>
-      <button class="button" onclick="window.location.href='../stock/stock.html'">Stock</button>
-    </span>
-  </center>
-  <br>
-  <br>
-  <center>
-    <div id="geo-forecast"></div>
-    <br>
-    <div id="geo-alerts" style="width:960px;text-align:left;"></div>
-  </center>
 </body>
-
 </html>
